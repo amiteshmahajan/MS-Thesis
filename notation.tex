@@ -1,0 +1,54 @@
+%
+%  Time-stamp: "[notation.tex] last modified by Scott Budge (scott) on 2011-08-08 (Monday, 8 August 2011) at 15:48:03 on goga"
+%
+%
+% This is an example of a notations page.  
+% The publication guide does not specify a format.
+% The example here is in tabular format.
+%
+% Please note that the symbols in this example are defined
+% in a separate include file.
+%  Info: $Id$   USU
+%  Revision: $Rev$
+% $LastChangedDate$
+% $LastChangedBy$
+%
+
+\begin{notation}
+
+\setlength{\tabcolsep}{3mm}
+{\begin {tabular}{ll}
+\multicolumn{2}{l}{\textbf{Events}}\\
+$\Sigma$ & set of all events (universal alphabet)\\
+$\tick$   & successful termination signal\\
+$\tau$ & invisible (internal) event\\
+$a.b.c$    & compound event\\
+$c ? x$   &input on channel $c$\\
+$c ! x$   &output on channel $c$\\
+$\lchan c \rchan$   &set of all events associated with channel $c$\\
+\multicolumn{2}{l}{\textbf{Traces}}\\
+$\nil$ &empty sequence\\
+$\lseq a_1, \ldots , a_n \rseq$ & sequence $a_1, \ldots , a_n$, in that order\\
+$s_1 \cat s_2$ &$s_1$ concatenated with $s_2$, e.g. $\lseq a \rseq \cat \lseq b \rseq = \lseq a, b \rseq$\\
+$s_1 \leq s_2$ &$s_1$ is a prefix of $s_2$, e.g.  $\lseq a \rseq \leq \lseq a, b \rseq$ \\
+$s \hide X$ &hiding - all members of $X$ removed from $s$\\
+$s \restrict X$ &restriction - hide all but members of $X$\\
+$s \crestrict c$ &sequence of values in $s$ communicated over channel $c$\\
+$s \seqcount a$ &number of $a$ events in $s$\\
+\multicolumn{2}{l}{\textbf{Processes}}\\
+$a \then P$ &prefixing\\
+$P \interleave Q$ &interleaved parallel\\
+$P \parallel[A][B] Q$ &alphabetized parallel\\
+$P \parallel[X] Q$ &interface parallel\\
+$P \extchoice Q$ &external choice\\
+$P \intchoice Q$ &nondeterministic choice\\
+$P \comp Q$ &sequential composition\\
+$P \hide X$ &hiding\\
+\end {tabular}}
+
+% The table as defined above will fill one page. If you need more room to list
+% notation you will need to create a second table, and place it below this 
+% comment. This new table will appear one a new page.
+
+\end{notation}
+

@@ -1,0 +1,29 @@
+\BOOKMARK [0][-]{Doc-Start}{ABSTRACT}{}% 1
+\BOOKMARK [0][-]{Doc-Start}{PUBLIC ABSTRACT}{}% 2
+\BOOKMARK [0][-]{chapter*.1}{ACKNOWLEDGMENTS}{}% 3
+\BOOKMARK [0][-]{chapter*.3}{LIST OF TABLES}{}% 4
+\BOOKMARK [0][-]{chapter*.4}{LIST OF FIGURES}{}% 5
+\BOOKMARK [0][-]{chapter*.5}{ACRONYMS}{}% 6
+\BOOKMARK [0][-]{chapter.1}{INTRODUCTION}{}% 7
+\BOOKMARK [1][-]{section.1.1}{Background}{chapter.1}% 8
+\BOOKMARK [0][-]{chapter.2}{RESIDUAL VECTOR QUANTIZATION AND ITS PROBLEMS}{}% 9
+\BOOKMARK [1][-]{section.2.1}{Residual Vector Quantization \(RVQ\)}{chapter.2}% 10
+\BOOKMARK [1][-]{section.2.2}{Reasons for the Poor Performance of RVQs}{chapter.2}% 11
+\BOOKMARK [1][-]{section.2.3}{Methods to Improve RVQ Performance}{chapter.2}% 12
+\BOOKMARK [2][-]{subsection.2.3.1}{Brute Force RVQ or Stagewise RVQ \(SRVQ\)}{section.2.3}% 13
+\BOOKMARK [2][-]{subsection.2.3.2}{Exhaustive Search RVQ \(ESRVQ\)}{section.2.3}% 14
+\BOOKMARK [2][-]{subsection.2.3.3}{Deep Search RVQ}{section.2.3}% 15
+\BOOKMARK [2][-]{subsection.2.3.4}{Comparison of SRVQ, DSRVQ, and ESRVQ Encoders}{section.2.3}% 16
+\BOOKMARK [2][-]{subsection.2.3.5}{Algorithm for Generating Jointly Optimized Codebooks}{section.2.3}% 17
+\BOOKMARK [2][-]{subsection.2.3.6}{Reflection Symmetric RVQ \(rRVQ\)}{section.2.3}% 18
+\BOOKMARK [2][-]{subsection.2.3.7}{Distortion Results and Analysis}{section.2.3}% 19
+\BOOKMARK [0][-]{section.2.4}{REFERENCES}{}% 20
+\BOOKMARK [0][-]{chapter.3}{APPENDICES}{}% 21
+\BOOKMARK [1][-]{appendix.A}{A \040List of Edge Vectors}{chapter.3}% 22
+\BOOKMARK [2][-]{subsection.A.0.1}{Definition of an Edge Vector}{appendix.A}% 23
+\BOOKMARK [2][-]{subsection.A.0.2}{Next Codebook Size Description}{appendix.A}% 24
+\BOOKMARK [2][-]{subsection.A.0.3}{Final Set of Codebook Size Descriptions}{appendix.A}% 25
+\BOOKMARK [1][-]{appendix.B}{B \040Another Example Appendix}{chapter.3}% 26
+\BOOKMARK [2][-]{subsection.B.0.1}{Background}{appendix.B}% 27
+\BOOKMARK [2][-]{subsection.B.0.2}{Meat of the Appendix}{appendix.B}% 28
+\BOOKMARK [0][-]{appendix*.8}{CURRICULUM VITAE}{}% 29

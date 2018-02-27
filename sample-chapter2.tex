@@ -1,0 +1,199 @@
+%
+%  This is an example of how a LaTeX thesis should be formatted.  This
+%  document contains chapter 2 of the thesis.
+%
+%  Time-stamp: "[sample-chapter2.tex] last modified by Scott Budge (scott) on 2016-07-28 (Thursday, 28 July 2016) at 08:40:50 on goga.ece.usu.edu"
+%
+%  Info: $Id: sample-chapter2.tex 967 2016-07-28 15:33:29Z scott $   USU
+%  Revision: $Rev: 967 $
+% $LastChangedDate: 2016-07-28 09:33:29 -0600 (Thu, 28 Jul 2016) $
+% $LastChangedBy: scott $
+%
+
+\chapter{RESIDUAL VECTOR QUANTIZATION AND ITS PROBLEMS}
+
+\section{Residual Vector Quantization (RVQ)}
+
+A $P$-stage RVQ consists of a sequence of $P$ single stage Vector
+Quantizers.  Let us assume that the RVQ is made up of ESVQ stages.
+Each ESVQ is fully described by the set \{ $A^{\rho}, Q^{\rho},
+P^{\rho}$ \}.  The method for designing the ESVQ is given in
+Algorithm~\ref{alg:LBG}.  Note that this is the ``usual'' codebook
+design algorithm.% Note how quotes are used in the previous sentence.
+
+%This is HOW SECTION HEADINGS EXCEEDING 3 inches should be declared
+%so that it wraps in the heading but not in the TOC.
+%\section[Reasons for the Poor Performance of RVQs]{Reasons for the
+%  Poor \newline Performance of RVQs}
+
+%Normally you do the following, and ignore the 3-inch rule:
+Throw in some citations \cite{shucker,tbrady,moon,bar1}.
+
+
+\begin{alg}
+\begin{tabbing}
+{\bf Input:} \=  \\ 
+    \> Training vectors ($V_t$), \\
+    \> Distortion measurement rule $d$, \\
+    \> Codebook size $N$, \\
+    \> Threshold $\varepsilon$ \\
+{\bf Output: } \\
+ \> Codebook Vectors, $Cb_i$  \\
+{\bf Begin} \\
+ \> Select $N$ initial codevectors, $Cb_i$  \\
+ \> {\bf Do} \= \\
+ \> \> {\bf Begin} \= \\
+ \> \> \> Partition $V_t$ \\
+ \> \> \> $Dist_{prev} = Dist_{current}$ \hspace{1.2in}\=/* Dist is the average */ \\
+ \> \> \> Calculate $Dist_{current}$ \> /* distortion of all the */ \\
+ \> \> \> Calculate Centroids of $N$ groups of $V_t$ \> /* training vectors when */\\
+ \> \> \> $Cb_i$ = Centroid of that group \> /* partitioned or encoded */ \\
+ \> \> {\bf End} \\
+ \> {\bf while} $\{(Dist_{prev} - Dist_{current})/Dist_{prev} \geq \varepsilon\}$ \\
+{\bf End} \\
+\end{tabbing}
+\caption{LBG}
+\label{alg:LBG}
+\end{alg}
+
+\section{Reasons for the Poor Performance of RVQs}
+
+\begin{equation}
+d(X^{\rho},Y_i^{\rho} + A^{\rho+1}+ \cdots + A^{P}) \leq d(X^{\rho},A^{\rho} + A^{{\rho}+1} + \cdots + A^P)
+\label{cond-optpart}
+\end{equation}
+
+It can be noticed from the above equation that while the traditional
+RVQ partitions are based on the stagewise residues, the optimal RVQ
+partitions are based on the final residues. As is evident from
+(\ref{cond-optpart}), the optimal codevectors are unique.  The
+equivalent codevectors are obtained by summing all possible
+combinations of the codevectors of all stages.  These represent the
+set of reconstruction vectors possible at the decoder.
+
+\section{Methods to Improve RVQ Performance}
+
+The various  methods either suboptimal or optimal used in codebook generation
+ and in the quantizer (RVQ) implementation are dealt with here.  The common
+ goal of all these methods is to improve the performance of the RVQ. 
+
+\subsection{Brute Force RVQ or Stagewise RVQ (SRVQ)}
+
+The new codevectors are obtained by adding the centroids of the
+stagewise residues to the old codevectors.  This can be done using a
+random splitting technique or a selective splitting technique.
+
+\subsection{Exhaustive Search RVQ (ESRVQ)}
+
+ESRVQ is the optimal RVQ described in the previous section.  ESRVQ, as
+the name suggests, exhaustively searches all the {\em equivalent}
+codevectors as shown in (\ref{cond-optpart}).  Centroids of the final
+residues are added to the codevectors during each iteration of the
+codebook design, to obtain the new optimal codevectors for the given
+partition.
+
+\subsection{Deep Search RVQ}
+
+Although ESRVQ is optimal, it needs an exhaustive search encoder. We
+must be able to create the encoder using an optimal method. 
+
+
+\subsection{Comparison of SRVQ, DSRVQ, and ESRVQ Encoders}
+
+This section compares the different encoders presented previously.
+The different encoders have different performance and complexity, and
+so must be compared using a common basis.  This is difficult to do,
+since we must first establish the criteria we will use.
+
+\subsection{Algorithm for Generating Jointly Optimized
+Codebooks}
+
+
+The ESRVQ is not instrumentable and the DSRVQ does not use a
+tree-structured encoder.  Hence Barnes et al. proposed the reflection
+symmetric RVQ or the rRVQ~\cite{Barn-JORVQ}.  The rRVQ uses a
+tree-structured encoder similar to SRVQ although it differs from the
+traditional RVQ or the SRVQ encoder in that it is slightly more
+complex.  The rRVQ codebook is also more structured than the
+traditional RVQ.
+
+Some other citations are in
+\cite{moon,BAK-nonadVQ,B-JORVQ,Barnes-RQ,Datasheet1,CID-example,Privatecom,Patent1,Berg-RD,CMH}.
+
+\subsection{Reflection Symmetric RVQ (rRVQ)}
+
+The ESRVQ is not instrumentable and the DSRVQ does not use a
+tree-structured encoder.  Hence Barnes et al. proposed the reflection
+symmetric RVQ or the rRVQ~\cite{Barn-JORVQ}.  The rRVQ uses a
+tree-structured encoder similar to SRVQ although it differs from the
+traditional RVQ or the SRVQ encoder in that it is slightly more
+complex.  The rRVQ codebook is also more structured than the
+traditional RVQ.
+
+The structured nature of the rRVQ codebook allows for a reduction of
+the complexity of the the implementation.
+
+\subsubsection{Binary rRVQ}
+
+It was already stated that for the optimal performance of the RVQ, an
+exhaustive search encoder must be used. To avoid this in rRVQ the
+codebook is constrained in such a way that the nearest neighbor
+stagewise equivalence classes are simply connected and
+convex~\cite{Barn-JORVQ}.  A reflection symmetry is forced between the
+stagewise codevectors of the binary rRVQ to obviate the suboptimality
+caused by {\em entanglement} and {\em overlapping} discussed in the
+previous chapter.  Barnes et al. derived the optimality conditions
+for the rRVQ quantitatively~\cite{Barn-JORVQ}.  They stated their
+results as follows~\cite[pp. 3--4]{Barn-JORVQ}:
+\begin{quotation}
+\begin{spacing}{1}
+  ``The difficulty in achieving optimality is that it is difficult.  We
+  observed that it was necessary to look at the conditions for
+  optimality before we could proceed.  We then proceeded with caution.
+
+  Having proceeded, we applied the conditions for optimality.  To our
+  amazement, we found our results were optimal.''
+\end{spacing}
+\end{quotation}
+
+
+\subsection {Distortion Results and Analysis}
+Table \ref{table:dist4x4} gives the PSNR in dB of the reconstructed test image,
+compressed (encoded and decoded) using the codebooks generated by SRVQ. 
+
+\begin{table}[!t] % table at top of page.
+  % increase table row spacing, adjust to taste
+  \renewcommand{\arraystretch}{1.3}
+  \caption{Performance results of ESRVQ, rRVQ, SRVQ, and DSRVQ of 4x4
+    vectors (PSNR~in~dB).}
+  \label{table:dist4x4}
+
+  \centering
+  \begin{tabular}{||c|c||c|c||c|c||c|c||c|c||} \hline
+    No. of  & &
+    \multicolumn{2}{c||}{SRVQ} & \multicolumn{2}{c||}{DSRVQ} &
+    \multicolumn{2}{c||}{ESRVQ} & \multicolumn{2}{c||}{rRVQ} \\ \cline{3-10}
+    Stages & bps & Unopt & JO & Initial & JO & Initial & JO & Initial & JO \\ \hline
+  \end{tabular}
+\end{table}
+
+The ESRVQ is not instrumentable and the DSRVQ does not use a
+tree-structured encoder.  Hence Barnes et al. proposed the reflection
+symmetric RVQ or the rRVQ~\cite{Barn-JORVQ}.  The rRVQ uses a
+tree-structured encoder similar to SRVQ although it differs from the
+traditional RVQ or the SRVQ encoder in that it is slightly more
+complex.  The rRVQ codebook is also more structured than the
+traditional RVQ.
+
+It is important to recognize at this point, that rRVQ is a suboptimal
+method for covering the vector space.  It is therefore important to
+make sure that the best possible vectors are chosen for the codebook.
+
+% For use with multiple-paper format, uncomment the fillowing:
+% \pagebreak
+% \bibliographystyle{IEEEtran}
+% \bibliography{IEEEabrv,BibFile2}  % uses the references stored in BibFile2.bib for this chapter
+
+% Local Variables:
+% TeX-master: "newhead"
+% End:

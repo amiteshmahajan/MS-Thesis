@@ -1,0 +1,136 @@
+%
+%  --- USU thesis and dissertation template ---
+%
+% Time-stamp: "[thesis.tex] last modified by Scott Budge (scott) on 2017-01-12 (Thursday, 12 January 2017) at 10:25:30 on goga.ece.usu.edu"
+%
+%  Modified to use the new usuthesis.cls by Allan McInnes
+%
+%  Specify department ('ee' or 'ce' or 'mae') and document type ('msthesis',
+%  'msreport', or 'dissertation') in the documentclass options. 
+%
+%  Including the 'proposal' option will generate a proposal for a thesis
+%  or dissertation, rather than a final document (this mostly just 
+%  alters the cover page).
+%
+%  See the opening comments of usuthesis.cls for more information on 
+%  available options
+%
+%  To create finished document run:
+%    latex thesis.tex
+%    bibtex thesis (or sample-chapter1, etc., if using multiple-paper format)
+%    latex thesis.tex
+%    latex thesis.tex
+%
+%  Info: $Id: thesis.tex 998 2017-03-21 16:44:33Z scott $   USU
+%  Revision: $Rev: 998 $
+% $LastChangedDate: 2017-03-21 10:44:33 -0600 (Tue, 21 Mar 2017) $
+% $LastChangedBy: scott $
+%
+
+% For the ECE Department:
+\documentclass[ee,msthesis]{usuthesis}
+% For the MAE Department:
+%\documentclass[mae,msthesis]{usuthesis}
+
+%{{{ Packages
+\usepackage{amssymb}           % add ams symbols stuff
+\usepackage{graphicx}          % add graphics
+\usepackage{subfigure}
+\usepackage{url}
+%\usepackage{flafter}           % Cause floats to appear after
+                               % environment.
+%\usepackage{siunitx}           % Provides standard formatting of SI units.
+
+% Include TikZ and PGF packages for high-quality graphics, schematics
+% and plots. This is optional; at the current time, when run with
+% latex to create a .dvi file, the xdvi viewer will produce incorrect
+% formatting for the TikZ figures.  If the .dvi file is converted to
+% pdf using "dvipdf" the resulting pdf file is correct.  If this
+% example is used with  pdflatex, the resulting TikZ figures in the
+% output look fine.
+\usepackage{tikz}       		% The base tikz+pgf package
+\usetikzlibrary{arrows,shapes}	% Optional tikz extensions
+\usepackage[american]{circuitikz}	% TikZ-based package for schematic drawings
+\usepackage{pgfplots}			% Tikz-based package for making plots 
+\pgfplotsset{compat=1.6}        % This *might* be necessary for your
+                                % version of pgfplots.
+
+\usepackage{hyperref} % Creates hyperlinks within document
+\hypersetup{colorlinks=true, linkcolor=blue,
+  citecolor=blue,urlcolor=blue} % Use when compiling the digital copy
+% \hypersetup{colorlinks=true, linkcolor=black,
+% citecolor=black,urlcolor=black} % Use when compiling the printed copy
+
+% The following allows for hyperlinked DOIs to be inserted in the
+% manuscript by using \doi{}.
+\usepackage{doi}
+
+% Set spacing around figures and tables to triple space
+\setlength{\intextsep}{2em} % Vertical space above & below [h] floats
+\setlength{\textfloatsep}{2em} % Vertical space below (above) [t] ([b]) floats
+
+% The following is added if you are using the multiple-paper format to
+% add references after each chapter:
+%\usepackage[sectionbib]{chapterbib}
+
+%}}}
+
+% Author and Title Information
+\author{John Q. Engineer}
+\title{A Complicated and Impressive Sounding Title that is Too Long
+  For a Single Line While Including Everything}
+
+% The Committee
+\majorprof{Richard P. Feynmann, PhD}
+\firstreader{Robert L. Forward, PhD}
+\secondreader{Albert Einstein, PhD}
+\thirdreader{Gottfried Liebniz, PhD}
+\fourthreader{Isaac Newton, PhD}
+
+% Graduate Dean
+\graddean{Mark R. McLellan, PhD}
+\deantitle{Vice President for Research and \\
+Dean of the School of Graduate Studies}
+
+% Degree Information
+\degree{Master of Science}
+%\degree{Doctor of Philosophy}
+\month{May}
+\gradyear{2017}
+
+\begin{document}
+    %{{{ Frontmatter
+    \preliminaries   % set frontmatter style
+    
+    \maketitle
+    \makecopyright        % optional
+    
+    \include{abstract}
+    \include{publicabstract}
+    \include{dedication}  % optional 
+    \include{acknowl}     % optional
+    
+    \tableofcontents 
+    \listoftables 
+    \listoffigures
+    
+%    \include{notation}  % optional
+    \include{acronyms}  % optional  
+    %}}}
+    %{{{ The main body of the thesis
+    \body  % set main body style
+    % Chapters
+    \include{sample-chapter1}
+    \include{sample-chapter2}
+    
+    % Endmatter
+    % For BibTeX references: specify a .bib file and a style.
+    % The style used here is for IEEE transactions formatting:
+    \references{IEEEabrv,sample}{IEEEtran}
+    % The style used here is for AIAA formatting:
+%    \references{IEEEabrv,sample}{aiaa}
+    
+    \include{appendix}
+    \include{vita}
+    %}}}
+\end{document}

@@ -1,0 +1,100 @@
+% Plan B title page
+%
+%  This is a include file for converting the MS thesis title page to a
+%  plan B page.
+%
+%  Time-stamp: "[planbtitle.tex] last modified by Scott Budge (scott) on 2011-08-08 (Monday, 8 August 2011) at 15:48:26 on goga"
+%
+%  Info: $Id$   USU
+%  Revision: $Rev$
+% $LastChangedDate$
+% $LastChangedBy$
+%
+
+\typeout{Plan B title page - $LastChangedDate$ $Rev$}
+\def\maketitle{ %\thispagestyle{empty}
+  \setcounter{page}{2}
+  \begin{center}
+    \null \vfill
+    Copyright \hspace{5pt} \copyright \hspace{5pt} \Zauthor \hspace{5pt} \Zyear \\
+    \vskip 14pt
+    All Rights Reserved \\
+    \vfill
+    \newpage
+    \thispagestyle{empty}
+    \setcounter{page}{2}
+
+%   This is the TITLE PAGE - I have it set up for a TWO line title - hack
+%   the \vspaces in here to expand or contract for different height titles
+%   - Randy
+    \null\vskip 20pt % Rama made it 20 from 25
+    \linewidth=3in
+    {\vskip0pt\doublespace\large\uppercase\expandafter{\Ztitle}}\\[2\baselineskip]
+    by\\
+    \null\vskip 13pt
+    \Zauthor \\
+    \null\vskip 18pt
+    A report submitted in partial fulfillment\\
+    of the requirements for the degree\\
+    \null\vskip 3pt
+    of\\
+    \null\vskip 3pt
+    \uppercase{\Zdegree} \\
+    \null\vskip 4pt
+    in\\
+    \null\vskip 2pt
+    \Zdegreein \\[2\baselineskip]
+%    Department of Electrical and Computer Engineering\\ %Removed by Arvind
+%    Utah State University\\
+%    Logan, Utah\\
+%    {\Zyear} \\
+    \null
+  \end{center}
+  \begin{flushleft}
+    Approved:\\
+    \vskip 2\baselineskip
+    \begin{center}
+      \rule{2.5in}{1pt}  \\
+      \makebox[2.5in][l]{\Zmajorprof} \\
+      \makebox[2.5in][l]{Major Professor}
+    \end{center}
+
+    \null\vskip 2\baselineskip
+    \rule{2.5in}{1pt} \hspace{0.5in}  \rule{2.5in}{1pt}\\[-3pt]
+    \makebox[2.5in][l]{\Zfirstreader} \hspace{0.5in}
+    \makebox[2.5in][l]{\Zsecondreader}\\
+    \makebox[2.5in][l]{Committee Member} \hspace{0.5in}
+    \makebox[2.5in][l]{Committee Member}
+  \end{flushleft}
+    \null\vskip 2pt %Added by Arvind
+    \begin{center}
+      UTAH STATE UNIVERSITY\\
+      Logan, Utah\\
+%      \null\vskip 7pt
+      {\Zyear}
+   \end{center}
+}
+%
+\def\makesignature{\newpage\null\vskip 54pt
+  \begin{center} UTAH STATE UNIVERSITY \\[2\baselineskip] \end{center}
+  \begin{flushright} {\Zdate} \end{flushright}
+  \par\noindent We hereby recommend that the \Zdissertation\
+  \uppercase\expandafter{\Ztitle}\ prepared under our supervision by
+  \Zauthor\ be accepted as fulfilling in part requirements for the
+  degree of \Zdegree
+  \begin{center}
+    \vskip 1\baselineskip
+    \underline{Committee on Graduate Work} \\[1\baselineskip]
+    \rule{3.5in}{1pt}\\[-8pt]
+    \makebox[3.5in][l]{Commitee Member}
+    \rule{3.5in}{1pt}\\[-8pt]
+    \makebox[3.5in][l]{Commitee Member}
+    \rule{3.5in}{1pt}\\[-8pt]
+    \makebox[3.5in][l]{Commitee Member}
+    \rule{3.5in}{1pt}\\[-8pt]
+    \makebox[3.5in][l]{Adviser}
+    \rule{3.5in}{1pt}\\[-8pt]
+    \makebox[3.5in][l]{Department Head}
+  \end{center}
+}
+%
