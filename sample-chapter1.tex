@@ -15,215 +15,72 @@
 \thispagestyle{empty}
 %%%%%%%%%%%%%
 
-Image compression or image coding is the process of reducing the
-redundancy in the image data that may result in some loss of
-information.  Vector quantization (VQ)\footnote{The acronym VQ is used
-  as an abbreviation for both vector quantization and vector
-  quantizer.} is one such technique.
+Bioreactor design is a relatively complex engineering task, which is studied in the discipline of biochemical engineering. Under optimum conditions, the microorganisms or cells can perform their desired function with limited production of impurities. The environmental conditions inside the bioreactor, such as temperature, nutrient concentrations, pH, and dissolved gases (especially oxygen for aerobic fermentations) affect the growth and productivity of the organisms. The temperature of the fermentation medium is maintained by a cooling jacket, coils, or both. Particularly exothermic fermentations may require the use of external heat exchangers. Nutrients may be continuously added to the fermenter, as in a fed-batch system, or may be charged into the reactor at the beginning of fermentation. The pH of the medium is measured and adjusted with small amounts of acid or base, depending upon the fermentation. For aerobic (and some anaerobic) fermentations, reactant gases (especially oxygen) must be added to the fermentation. Since oxygen is relatively insoluble in water (the basis of nearly all fermentation media), air (or purified oxygen) must be added continuously. The action of the rising bubbles helps mix the fermentation medium and "strips" out waste gases, such as carbon dioxide. In practice, bioreactors are often pressurized; this increases the solubility of oxygen in water. In an aerobic process, optimal oxygen transfer is sometimes the rate limiting step.
 
-\section{Background}
-Binary splitting is illustrated in Fig.~\ref{fig:split}.
+\section{Specifications of a bioreactor}
+A typical bioreactor shown in Fig~\ref{fig:split} consists of following parts:\newline
+1.\textbf{Agitator} – used for the mixing of the contents of the reactor which keeps the “cells” in the perfect homogenous condition for better transport of nutrients and oxygen to the desired product(s).\newline
+2.\textbf{Baffle} – used to break the vortex formation in the vessel, which is usually highly undesirable as it changes the center of gravity of the system and consumes additional power.\newline
+3.\textbf{Sparger} – In aerobic cultivation process, the purpose of the sparger is to supply adequate oxygen to the growing cells.\newline
+4.\textbf{Jacket} – The jacket provides the annular area for circulation of constant temperature of water which keeps the temperature of the bioreactor at a constant value.\newline
+
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=0.7\textwidth]{samplefig}
-\caption{Binary splitting.}
+\includegraphics[width=0.7\textwidth]{images/reactor.png}
+\caption{Bioreactor.}
 \label{fig:split}
 \end{figure}
-This figure is generated using an open-source figure drawing package
-(called {\tt fig}).  Any figure drawing package can be used to
-generate figures.  The easiest format for output is to output the
-figures in {\tt .pdf} format for inclusion in the {\tt .tex} file.
+\section{UASB reactor}
+An efficient anaerobic digestion (AD) of organic matter is a result of a complex microbial interaction inside a bioreactor. For the high-rate anaerobic digestion of a feedstock, an up flow anaerobic sludge blanket reactor (UASB) is a common choice. 
 
-% For the following three examples, note the problems with the xdvi
-% viewer described in the thesis.tex and the README.txt files.
+UASB uses an anaerobic process whilst forming a blanket of granular sludge which suspends in the tank. Wastewater flows upwards through the blanket and is processed (degraded) by the anaerobic microorganisms. The upward flow combined with the settling action of gravity suspends the blanket with the aid of flocculates. The blanket begins to reach maturity at around three months. Small sludge granules begin to form whose surface area is covered in aggregations of bacteria. In the absence of any support matrix, the flow conditions create a selective environment in which only those microorganisms capable of attaching to each other survive and proliferate. Eventually the aggregates form into dense compact biofilms referred to as "granules".Biogas with a high concentration of methane is produced as a by-product, and this may be captured and used as an energy source, to generate electricity for export and to cover its own running power.
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% TikZ example:  This is the same as the above figure, except done
-% using TikZ.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{figure}[!t]
-	\begin{center}
-		\begin{tikzpicture}[every text node part/.style={align=center}]
-			% Place nodes:
-			\draw (0,0) node[draw] (book1) {{\em Codebook}\\ {\small Stage 1}};
-			\draw ($(book1) + (0,-2)$) node[draw] (vq1) {{\em VQ}\\ {\small Stage 1}};
-			\draw ($(vq1) + (3,-3)$) node[circle,draw,minimum height=1cm] (adder) {$\Sigma$};
-			\draw ($(adder) + (5,0)$) node[draw] (vq2) {{\em VQ}\\ {\small Stage 2}};
-			\draw ($(vq2) + (0,2)$) node[draw] (book2) {{\em Codebook}\\ {\small Stage 2}};
-			
-			% Draw arrows:
-			\draw [-latex] (book1.south) -- (vq1.north);
-			\draw [-latex] (book2.south) -- (vq2.north);
-			\draw [-latex] ($(vq1.north east)+(0,-.25)$) node(vqout1) {} -| ($(adder.north)+(0,6)$) node[anchor=south west] (ji) {$j_i$};
-			\draw [-latex] ($(vq1.south east)+(0,.25)$) node(vqout2) {} -| (adder.north);
-			\draw [-latex] (vq1.west) -- ($(vq1.west)+(-1,0)$) node (in) {} |- (adder.west);
-			\draw [-latex] (vq2.east) -| ($(ji.south west) + (7,0)$) node[anchor=south west] (jk2) {$j_k^2$};
-			\draw ($(vq1.west)+(-2,0)$) node[anchor=east] {$X^1$} to[short,o-*] (in);
-			\draw [-latex] (in) -- (vq1.west);
-			\draw [-latex] (adder.east) -- (vq2.west);
-			
-			% Draw remaining labels:
-			\draw (vqout2) node[anchor=north west] {$Y_{j_i^1}^1$};
-			\draw (adder.north) node[anchor=south east] {$-$};
-			\draw (adder.west) node[anchor=south east] {$+$};
-			\draw (adder.east) node[anchor=south west] {$X^1-Y_{j_i^1}^1$};
-			\draw (vq2.west) node[anchor=south east] {$X^2$};
-			
-			% Draw annotation:
-			\draw ($(ji)!0.5!(jk2) + (0,1)$) node (indices) {\Large Indices};
-			\draw[thick,-triangle 45] (indices.west) to [out=180,in=45] (ji.north east);
-			\draw[thick,-triangle 45] (indices.east) to [out=0,in=135] (jk2.north west);
-		\end{tikzpicture}
-		\caption{Binary splitting (drawn with TikZ).}
-		\label{fig:split_tikz}
-	\end{center}
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=1.0\textwidth]{images/usab.png}
+\caption{A USAB reactor.}
+\label{fig:usab reactor}
 \end{figure}
 
-%%%%%%%%%%%%%%%%%
-% CircuiTikZ example:
-%%%%%%%%%%%%%%%%%
-\begin{figure}[!t]
-	\begin{center}
-		\begin{tikzpicture}
-			\draw (0,0) node[op amp,scale=0.75] (oa){};
-			\draw (oa.out) to[short, -*] ++(1,0) node (n1) {};
-			\draw (n1.base) -- ++(1,0) to[C,l^=$C_S$,v_=$V_{\textrm{\small out,ofs}}$] ++(3,0) 	node[anchor=west] (n4) {$V_{\textrm{\small out}}$};
-			\draw (oa.-) to[short,-*] ++(-1,0) node (n2) {};
-			\draw (n2.base) |- ++(1,2) to[C] ++(2,0) -| (n1.base);
-			\draw ($(oa.+)+(0,-3)$) node[ground] {}  to[vsource=$V_{\textrm{\small in,ofs}}$] (oa.+);
-			\draw (n2.base) to[C] ++(-2,0) node[anchor=east] (n3) {$V_{\textrm{\small in}}$};
-		\end{tikzpicture}
-		\caption{Circuit example drawn using circuitikz.}
-		\label{fig:circuitikz_exmple}
-	\end{center}
+\section{Background}
+
+The predominant execution of this reactor is because of the specific association of microorganisms into circular granular structures. The process of granulation was first noticed and documented in the early 1980s[citation] and since then many anaerobic granulation theories have been presented. The main reasoning for the granulation per se is the up-flow velocity inside sludge bed of a UASB reactor. Microbial cells moving up with the flow of the feed tend to stick to the other microbial cells. Such sticking behavior prevents a washout of the microbial inoculum from a reactor since the outlet for the digested feed is in the top of the reactor [3,4]. The most widely accepted theory states that granulation starts with a formation of a future granules core, comprised of filamentous methanogenic bacteria Methanothrix, together with Methanosarcina, which secrete extracellular polymers (ECP) [citation]. The surface of this change and become attractive for the oppositely charged anaerobic bacteria that are present in the dispersed inoculum of a UASB[citation]. Chemo-attractancy of other bacteria towards ECPs and substrate around the granule core may also play a major role in the further aggregation and formation of mature granules [citation]. Despite these possible explanations of the granulation process, there is still no agreement on which of the possible theories correctly explain this most important and crucial role of granulation. The key factors of granulation are still to be determined, whether they are physical, biochemical or a combination of physicochemical properties of the cells and the way the organic matter transforms over space and time.
+
+Bioaugmentation is a typical procedure in the field of wastewater treatment, utilized to acquaint another metabolic capacity with either oxygen consuming or anaerobic granules. In this study, we have created a simulation model which is concerned about digesting celloboise, as a major component of microalgae in a bioreactor. Once a mature granule is formed, protein lipid is used as an alternative substrate that will be supplied to a mature granule. Protein, being a main component of cyanobacteria, will promote growth and incorporation of a cell type that can degrade protein (selective pressure). 
+
+Some exploration additionally proposes a requirement for a tight biochemical collaboration to happen between the bioaugmented strain and the available intact community (Citation). Such biochemical interaction together with substrate niche availability will lead to a stratification or compartmentalization of the bioaugmented strain in the granule. Intending to reveal insight to the systems of the anaerobic granulation, current group of metabolic and biochemical cooperations amid bioaugmentation of anaerobic granules can be connected to build up a prescient demonstrate for the bioaugmented granule. A model that can outwardly illustrate shifting stratifications of various trophic microbial gatherings will be of assistance for the designers and scientists, who are working both research center and modern scale anaerobic digesters and wish to improve reactor execution. In the past work, a model of anaerobic granulation was effectively manufactured, and a search engine was utilized to locate the ideal methane generation from the glucose concentration of COD corresponding to the low-strength wastewaters (Doloman et al., 2017). 
+
+\section{Current biological model}
+
+The new model reported here builds up on the basic principles of de novo anaerobic granulation reported earlier and a more complex model is suggested. Described granule formation is based on the aerobic decomposition of cellulose, thus describing a more vigorous microbial network of 5-6 different bacteria. To simulate bioaugmentation process as in the lab anaerobic digesters, new additional bacterial species are introduced to the mature complex granule, together with a specific substrate that can only be decomposed by the new introduced bacterium. Cellulose, being a main carbohydrate component of all plant and algal biomass, was chosen as a substrate of interest due to its relatively complex anaerobic digestion scheme, allowing multiple trophic groups to occupy the same layer in the granule. Lipid derivative was chosen as a substrate of interest that would be degraded with the simulated bioaugmented granule. This derivative, oleate is usually produced as an intermediate from anaerobic degradation of lipids, by glycerol-fermenting acidogenic bacteria (Angleidaki, 1988). Oleate is introduced into the model together with an arbitrary oleate degrading bacterium, providing a full contrast to the decomposition of the cellulose substrate and thus bioaugmenting the granule with the new or additional metabolic capability. Thus, the purpose of this study was to model different scenarios of bioaugmenting anaerobic granule with the novel microbial species: with and without pressure of the available specific substrate.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.7\textwidth]{images/schema1.png}
+\caption{Schema of complex granule formation.}
+\label{fig:Schema of complex granule formation}
 \end{figure}
 
-There are many other ways to create figures.  One package compatible
-with \LaTeX\ is TikZ.  An example is given in
-Fig.~\ref{fig:split_tikz}. This is identical to Fig.~\ref{fig:split},
-except that it is done within the compiling process of \LaTeX.
-Another example of a third-party figure package is given in
-Fig.~\ref{fig:circuitikz_exmple}.  This circuit was generated using
-the {\tt circuitikz} package.
+Current study explores different scenarios of bioaugmenting anaerobic granules with the novel microbial species: with and without pressure of the available specific substrate. The general aim of the study is to expand the knowledge on both successful bioaugmentation experiments and inspire for industrial-scale modifications in anaerobic digestion processes. 
 
-It is important that there is no text between figures when they are
-referenced close together in the text.  They should be ``stacked''
-without text in between as seen above.
-
-A final way of creating graphs is to use a open-sourse package called
-{\tt PGFPlots}.  An example of a good-looking graph generated using
-this package is given in Fig~\ref{fig:pgfplots_example}.  Note that
-this figure is large enough that it is pushed by \LaTeX\ to another
-page by itself and nicely centered.
-%%%%%%%%%%%%%%%%%
-% PGFplots example:
-%%%%%%%%%%%%%%%%%
-\begin{figure}[tbh]
-\begin{center}
-\begin{tikzpicture}
-\begin{semilogyaxis}
-[% 
-scale only axis, 
-width=5in, 
-height=5in, 
-xmin=0, 
-xmax=0.21, 
-xtick={0, 0.04, ..., 0.2},
-ymin=1e-006, 
-ymax=1, 
-yminorticks=true, 
-%xlabel={$\text{Tx Pulse amplitude }(\si{\volt})$},
-xlabel={Tx Pulse amplitude (V)},
-ylabel={Bit Error Probability}, 
-xmajorgrids, 
-ymajorgrids, 
-yminorgrids,
-legend columns=3,
-legend style={at={(0.5,-0.1)},anchor=north},%{at={(0.5,-0.5)},anchor=south},
-cycle multi list={%
-   color list\nextlist
-   [3 of]mark list}
-]
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%8p_NF4_uncoded
-\addplot [ color=blue, solid, mark=*, mark options={fill=blue} ] 
-coordinates{  
-(0.001,0.478052)(0.011,0.272706)(0.021,0.124776)(0.031,0.045402)(0.041,0.013449)(0.051,0.003469)(0.061,0.00094)(0.071,0.000328)(0.081,0.00017)(0.091,0.000108)(0.101,7.9e-005)(0.111,6e-005)(0.121,5.4e-005)(0.131,4.4e-005)(0.141,3.7e-005)(0.151,3.6e-005)(0.161,3.2e-005)(0.171,3.1e-005)(0.181,2.7e-005)(0.191,2.6e-005)(0.201,2.5e-005)  
-    };
-\addlegendentry{Uncoded}
-
-%8p_NF4_hard
-\addplot [ color=red, line width=1pt,dashed, mark=*,  mark options={fill=red},]
-coordinates{  
-(0.001,0.499268)(0.011,0.377753)(0.021,0.122226)(0.031,0.01535)(0.041,0.001172)(0.051,7.3e-005)(0.061,5e-006)(0.071,0)  
-};
-\addlegendentry{Hard decoded}
-
-%8p_NF4_soft
-\addplot [ color=black, dotted, line width=1.25pt,mark=*, mark options={fill=black} ] 
-coordinates{  (0.001,0.49911)(0.011,0.352208)(0.021,0.065849)(0.031,0.002668)(0.041,6e-005)(0.051,1e-006)  
-};
-\addlegendentry{Soft decoded}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%8p_NF5_uncoded
-\addplot [ color=blue, solid, mark=diamond*, mark options={fill=blue} ]
-coordinates{  (0.001,0.480507)(0.011,0.294723)(0.021,0.1521)(0.031,0.065413)(0.041,0.023695)(0.051,0.007415)(0.061,0.002195)(0.071,0.000714)(0.081,0.000305)(0.091,0.000167)(0.101,0.000109)(0.111,8.4e-005)(0.121,6.8e-005)(0.131,5.6e-005)(0.141,4.7e-005)(0.151,4.2e-005)(0.161,3.8e-005)(0.171,3.4e-005)(0.181,3.2e-005)(0.191,3.1e-005)(0.201,2.9e-005)      };
-\addlegendentry{Uncoded}
-
-%8p_NF5_hard
-\addplot [ color=red, dashed, mark=diamond*, mark options={fill=red} ]
-coordinates{  (0.001,0.499279)(0.011,0.403647)(0.021,0.17325)(0.031,0.033326)(0.041,0.003852)(0.051,0.000361)(0.061,2.9e-005)(0.071,3e-006)(0.081,1e-006)        
-};
-\addlegendentry{Hard decoded}
-
-%8p_NF5_soft
-\addplot [ color=black, dotted, line width=1.25pt,mark=diamond*, mark options={fill=black} ]
-coordinates{  (0.001,0.499265)(0.011,0.385162)(0.021,0.113072)(0.031,0.008749)(0.041,0.000313)(0.051,1e-005)(0.061,0)  
-};
-\addlegendentry{Soft decoded}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%8p_NF6_uncoded
-\addplot [ color=blue, solid, mark=square*, mark options={fill=blue} ]
-coordinates{  (0.001,0.482503)(0.011,0.315407)(0.021,0.179759)(0.031,0.088806)(0.041,0.038068)(0.051,0.014303)(0.061,0.004914)(0.071,0.001661)(0.081,0.000644)(0.091,0.000297)(0.101,0.000177)(0.111,0.000122)(0.121,9.5e-005)(0.131,7.1e-005)(0.141,5.8e-005)(0.151,5.3e-005)(0.161,4.6e-005)(0.171,4.2e-005)(0.181,3.6e-005)(0.191,3.4e-005)(0.201,3.3e-005)       };
-\addlegendentry{Uncoded}
-
-%8p_NF6_hard
-\addplot [ color=red, dashed, mark=square*, mark options={fill=red} ]
-coordinates{
-(0.001,0.499326)(0.011,0.424875)(0.021,0.22663)(0.031,0.062807)(0.041,0.010536)(0.051,0.001333)(0.061,0.000145)(0.071,1.6e-005)(0.081,4e-006)(0.091,0)  
-};
-\addlegendentry{Hard decoded}
-
-%8p_NF6_soft
-\addplot [ color=black, dotted, line width=1.25pt,mark=square*, mark options={fill=black} ] 
-coordinates{  (0.001,0.499363)(0.011,0.411563)(0.021,0.169253)(0.031,0.02352)(0.041,0.001472)(0.051,7.3e-005)(0.061,3e-006)(0.071,0)      
-};
-\addlegendentry{Soft decoded}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\end{semilogyaxis}
-
-\end{tikzpicture}
-
-\caption{Example figure made with PGFplots. Originally created in Matlab, then exported using the Matlab2TikZ script (available from Matlab Central). Then pasted into the \LaTeX\ document and edited for style. \label{fig:pgfplots_example} }
-\end{center}
-\end{figure}
+% Please add the following required packages to your document preamble:
+% \usepackage[table,xcdraw]{xcolor}
+% If you use beamer only pass "xcolor=table" option, i.e. \documentclass[xcolor=table]{beamer}
+\begin{table}
+\centering
+\caption{Microbe responsible for the conversion pathway}
+\label{table1}
+\begin{tabular}{|l|l|}
+\hline
+Conversion pathway                                       & Type of microbe responsible \\ \hline
+{\color[HTML]{00009B} \textbf{------------\textgreater}} & Clostridium I               \\ \hline
+{\color[HTML]{32CB00} \textbf{------------\textgreater}} & Clostridium II              \\ \hline
+{\color[HTML]{036400} \textbf{------------\textgreater}} & Methanogen I                \\ \hline
+{\color[HTML]{FFC702} \textbf{------------\textgreater}} & Desulfovibrio               \\ \hline
+{\color[HTML]{38FFF8} \textbf{------------\textgreater}} & Methanogen II               \\ \hline
+{\color[HTML]{FE0000} \textbf{------------\textgreater}} & OleateDegrader              \\ \hline
+\end{tabular}
+\end{table}
 
 
-
-% For use with multiple-paper format, uncomment the fillowing:
-% \pagebreak
-% \bibliographystyle{IEEEtran}
-% \bibliography{IEEEabrv,BibFile1}  % uses the references stored in BibFile1.bib for this chapter
-
-% Local Variables:
-% TeX-master: "newhead"
-% End:

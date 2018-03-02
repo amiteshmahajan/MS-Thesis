@@ -28,15 +28,20 @@
 %
 
 % For the ECE Department:
-\documentclass[ee,msthesis]{usuthesis}
+%\documentclass[cs,msthesis]{usuthesis}
+%\documentclass[12pt]{amsart}
 % For the MAE Department:
-%\documentclass[mae,msthesis]{usuthesis}
+\documentclass[ce,msthesis]{usuthesis}
 
 %{{{ Packages
 \usepackage{amssymb}           % add ams symbols stuff
 \usepackage{graphicx}          % add graphics
 \usepackage{subfigure}
 \usepackage{url}
+\usepackage{geometry}
+\usepackage{listings}
+\usepackage{color}
+\usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
 %\usepackage{flafter}           % Cause floats to appear after
                                % environment.
 %\usepackage{siunitx}           % Provides standard formatting of SI units.
@@ -76,15 +81,13 @@
 %}}}
 
 % Author and Title Information
-\author{John Q. Engineer}
-\title{A Complicated and Impressive Sounding Title that is Too Long
-  For a Single Line While Including Everything}
+\author{Amitesh Mahajan}
+\title{A model for bioaugmented Anaerobic granule}
 
 % The Committee
-\majorprof{Richard P. Feynmann, PhD}
-\firstreader{Robert L. Forward, PhD}
-\secondreader{Albert Einstein, PhD}
-\thirdreader{Gottfried Liebniz, PhD}
+\majorprof{Nicholas Flann, PhD}
+\firstreader{Vladimir Kulyukin, PhD}
+\secondreader{Xiaojun Qi, PhD}
 \fourthreader{Isaac Newton, PhD}
 
 % Graduate Dean
@@ -94,9 +97,9 @@ Dean of the School of Graduate Studies}
 
 % Degree Information
 \degree{Master of Science}
-%\degree{Doctor of Philosophy}
+%\degree{computer science}
 \month{May}
-\gradyear{2017}
+\gradyear{2018}
 
 \begin{document}
     %{{{ Frontmatter
@@ -107,7 +110,7 @@ Dean of the School of Graduate Studies}
     
     \include{abstract}
     \include{publicabstract}
-    \include{dedication}  % optional 
+    %\include{dedication}  % optional 
     \include{acknowl}     % optional
     
     \tableofcontents 

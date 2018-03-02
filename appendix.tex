@@ -22,243 +22,84 @@
 % For sub-appendices use \appendixsection{} and \appendixsubsection{}
 
 \makeappendices
-\appendix{List of Edge Vectors}
+\appendix{Input xml and result analysis code}
 \label{chap:appendix}
 
 
-\appendixsection{Definition of an Edge Vector}
+\appendixsection{Description}
+
+This xml document function as the definition of the model and as the input to the
+simulation framework.
+
+
 \label{sec:edge-def}
 
-Before we list the table of edge vectors, we need to describe what an
-edge vector is.  In this section we will describe in detail the theory
-that results in the edge vectors.  The first set of edge vectors is
-given in Table~\ref{table1}.
+\appendixsection{Protocol file to generate the complex granule on cellobiose}
 
-\begin{table}[!t]
-% increase table row spacing, adjust to taste
-  \renewcommand{\arraystretch}{1.3}
+    \lstset{
+    language=xml,
+    tabsize=3,
+    %frame=lines,
+    caption=Input xml,
+    label=code:sample,
+    frame=shadowbox,
+    rulesepcolor=\color{gray},
+    xleftmargin=20pt,
+    framexleftmargin=15pt,
+    keywordstyle=\color{blue}\bf,
+    commentstyle=\color{OliveGreen},
+    stringstyle=\color{red},
+    numbers=left,
+    numberstyle=\tiny,
+    numbersep=5pt,
+    breaklines=true,
+    showstringspaces=false,
+    basicstyle=\footnotesize,
+    emph={food,name,price},emphstyle={\color{magenta}}}
+    \lstinputlisting{new2.xml}
+    
+    \appendixsection{Result analysis code to generate spatial distribution data}
+    \lstset{frame=tb,
+  language=Java,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  caption=Species biomass calculator,
+  basicstyle={\small\ttfamily},
+  numbers=none,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{blue},
+  commentstyle=\color{black},
+  stringstyle=\color{red},
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=3
+}
+\lstinputlisting{BiomassGrowthAnalysis_Amitesh.java}
 
-  \caption{List of edge vectors for a codebook with b=8 and d=3, for a
-    $4 \times 4$ vector size.}
-  \label{table1}
-
-  \centering
-  \begin{tabular}{|c|c|} \hline
-    Level & Edge Vectors \\ \hline
-
-    & (5) \\ 
-    L1 & (6) \\
-    & (7) \\ \hline
-
-    & (3,1)\\
-    & (3,2)\\
-    & (3,5)\\
-    & (4,0)\\
-    L2 & (4,2)\\
-    & (4,3)\\
-    & (4,4)\\
-    & (4,5)\\
-    & (4,6) \\ \hline
-
-    & (3,4,1)\\
-    & (3,4,2)\\
-    & (3,7,0)\\
-    & (3,7,2)\\
-    & (3,7,4)\\
-    L3 & (4,1,0)\\
-    & (4,1,1)\\
-    & (4,1,2)\\
-    & (4,1,3)\\
-    & (4,1,4)\\
-    & (4,1,5)\\
-    & (4,1,6) \\ \hline
-
-  \end{tabular}
-
-\end{table}
-
-
-\appendixsection{Next Codebook Size Description}
-\label{sec:next-size}
-
-In this section we do the next size codebook.  This is different from
-the previous case in that the codebook size is different.  The next
-set of edge vectors is given in Table \ref{table2}.
-
-\appendixsection{Final Set of  Codebook Size Descriptions}
-\label{sec:final-size}
-
-The following three tables contain the data for codebook sizes that
-are different than the previous sizes.  We note that the differences
-in the tables are due to the differences in the sizes of the codebook
-edge vectors.  Note the values given in Table \ref{table3} --
-Table \ref{table5}.
-
-
-\begin{table}[!t]
-  \renewcommand{\arraystretch}{1.3}
-  \centering
-
-  \caption{List of edge vectors for a codebook with b=4 and d=3, for a
-    $4 \times 4$ vector size.}
-  \label{table2}
-
-  \begin{tabular}{|c|c|} \hline
-    Level & Edge Vectors \\ \hline
-
-    & (1)\\
-    L1 & (2)\\
-    & (3) \\ \hline
-
-    L2 & (0,3) \\ \hline
-
-    & (0,2,0)\\
-    L3 & (0,2,2)\\
-    & (0,2,3) \\ \hline
-
-  \end{tabular}
-
-\end{table}
-
-\begin{table}[!t]
-  \renewcommand{\arraystretch}{1.3}
-  \centering
-
-  \caption{List of edge vectors for a codebook with b=16 and d=3, for
-    a $4 \times 4$ vector size.}
-  \label{table3}
-
-  \begin{tabular}{|c|c|} \hline
-    Level & Edge Vectors \\ \hline
-
-    & (11)\\
-    & (12)\\
-    L1 & (13)\\
-    & (14)\\
-    & (15) \\ \hline
-
-    & (7,0)\\
-    & (7,1)\\
-    & (7,2)\\
-    & (7,6)\\
-    L2 & (8,4)\\
-    & (8,5)\\
-    & (8,6)\\
-    & (9,6)\\
-    & (9,14)\\
-    & (10,1) \\ \hline
-
-    & (4,6,14)\\
-    & (5,6,6)\\
-    & (6,14,0)\\
-    & (6,14,3)\\
-    L3 & (6,14,4)\\
-    & (6,14,5)\\
-    & (7,7,0)\\
-    & (7,14,7)\\
-    & (9,5,3)\\
-    & (9,5,10)\\
-    & (9,5,11) \\ \hline
-
-  \end{tabular}
-
-\end{table}
-
-\begin{table}[!t]
-  \renewcommand{\arraystretch}{1.3}
-  \centering
-
-  \caption{ List of edge vectors for a codebook with b=16 and d=3, for
-    a $2 \times 2$ vector size.}
-  \label{table4}
-
-  \begin{tabular}{|c|c|} \hline
-    Level & Edge Vectors \\ \hline
-
-    & (9)\\
-    & (10)\\
-    L1 & (11)\\
-    & (12)\\
-    & (13) \\ \hline
-
-    L2 & (6,0)\\
-    & (6,3) \\ \hline
-
-    & (2,2,8)\\
-    & (6,5,1)\\
-    & (6,5,4)\\
-    & (6,5,6)\\
-    & (6,5,7)\\
-    & (6,5,8)\\
-    L3 & (6,5,15)\\
-    & (7,0,14)\\
-    & (8,0,1)\\
-    & (8,15,3)\\
-    & (8,15,4)\\
-    & (8,15,10) \\ \hline
-
-  \end{tabular}
-
-\end{table}
-
-\begin{table}[!t]
-  \renewcommand{\arraystretch}{1.3}
-  \centering
-
-  \caption{ List of edge vectors for a codebook with b=16 and d=3, for
-    a $6 \times 6$ vector size.}
-  \label{table5}
-
-  \begin{tabular}{|c|c|} \hline
-    Level & Edge Vectors \\ \hline
-
-    & (6)\\
-    & (7)\\
-    & (8)\\
-    & (9)\\
-    L1 & (10)\\
-    & (11)\\
-    & (12)\\
-    & (13)\\
-    & (14)\\
-    & (15) \\ \hline
-
-    & (2,8)\\
-    & (2,13)\\
-    & (4,1)\\
-    & (4,6)\\
-    L2 & (4,7)\\
-    & (4,8)\\
-    & (4,10)\\
-    & (4,11)\\
-    & (4,13)\\
-    & (4,15) \\ \hline
-
-    & (1,7,0)\\
-    & (1,7,1)\\
-    & (1,7,2)\\
-    L3 & (1,7,3)\\
-    & (1,7,4)\\
-    & (1,7,6)\\
-    & (1,7,9)\\
-    & (1,7,12) \\ \hline
-
-  \end{tabular}
-
-\end{table}
-
-\appendix{Another Example Appendix}
+\appendixsection{Line graph generator for spatial distribution analysis}
+    \lstset{frame=tb,
+  language=Python,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  caption=Python script to generate line graphs and save them as images,
+  basicstyle={\small\ttfamily},
+  numbers=none,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{blue},
+  commentstyle=\color{black},
+  stringstyle=\color{red},
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=3
+}
+\lstinputlisting{graphGenerator.py}
+    
+    
+    
+    
 
 
-\appendixsection{Background}
-\label{sec:back}
-
-
-Some random appended text for this section of the appendix....
-
-
-\appendixsection{Meat of the Appendix}
-\label{sec:meat}
-
-Here we have the data that is so important to be included in this
-appendix.

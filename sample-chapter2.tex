@@ -10,190 +10,482 @@
 % $LastChangedBy: scott $
 %
 
-\chapter{RESIDUAL VECTOR QUANTIZATION AND ITS PROBLEMS}
+\chapter{MODEL AND EXPERIMENT}
 
-\section{Residual Vector Quantization (RVQ)}
+The process of granulation is modeled at two spatial scales in the simulation. At the macro scale, the reactor process is simulated where the cells are introduced into an agitated system (due to the up ow velocity in UASB reactor), cells interact and form multiple agglomerates (centers of granulation). At the mesoscale, simulations are performed that focus on the growth and development of one such agglomerate into a mature granule.
 
-A $P$-stage RVQ consists of a sequence of $P$ single stage Vector
-Quantizers.  Let us assume that the RVQ is made up of ESVQ stages.
-Each ESVQ is fully described by the set \{ $A^{\rho}, Q^{\rho},
-P^{\rho}$ \}.  The method for designing the ESVQ is given in
-Algorithm~\ref{alg:LBG}.  Note that this is the ``usual'' codebook
-design algorithm.% Note how quotes are used in the previous sentence.
+In the macro scale, randomly distributed methanogenic cells (further referred to as “methanogens"), Desulfovibrio and clostridium are introduced into random positions within the reactor. The particles experience mechanical forces due to agitation in the system as well as biomechanical forces due to homogeneous and heterogeneous adhesion and formation of EPS-driven interactions. As a cumulative effect of these forces, cells come close to each other and form several agglomerates.
+To closely monitor the growth patterns in the formation of a granule, the mesoscale simulation is designed to focus on the development of a single granule (from the initial agglomerate of all the species particles formed during the macro studies). In UASB bioreactors, granules move freely in an agitated system, where the supplied solutes are relatively mixed. To simulate such a mixed environment for the granule growth, we provide a continuous supply of one solute (Cellobiose) from all the sides of the simulation domain with diffusivity as defined in Table 2.1. The model executes growth reactions that represent the consumption of the supplied glucose by the Clostridium1, which secretes acetate, lactate and ethanol and the consumption of acetate by methanogen, which is converted into the methane gas. The other by solutes produced i.e, lactate and ethanol are consumed by clostridium II and Desulfovibrio respectively to produce acetate and hydrogen respectively. Hydrogen present in the system is consumed by methanogen2 cells to produce methane and acetate produced by clostridium II cells is consumed by methanogen I cells to produce methane as the final product. These reactions and food chains continue to progress for 1500 hours in the simulation and form a mature granule with radius of 630 micro meters as shown in Fig~\ref{fig:granule}.
 
-%This is HOW SECTION HEADINGS EXCEEDING 3 inches should be declared
-%so that it wraps in the heading but not in the TOC.
-%\section[Reasons for the Poor Performance of RVQs]{Reasons for the
-%  Poor \newline Performance of RVQs}
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=1.0\textwidth]{images/granule.jpg}
+\caption{A mature complex granule at the end of 1500 hours.}
+\label{fig:granule}
+\end{figure}
 
-%Normally you do the following, and ignore the 3-inch rule:
-Throw in some citations \cite{shucker,tbrady,moon,bar1}.
+ 
+\section{Formation of a complex granule on cellulose}
 
+This simulation is referred to by the name part 1 in the rest of the study.A granule with five types of bacteria (clostridium1, clostridium2, desulfovibrio and two types of methanogens) was formed on the constantly supplied cellobiose, substrate for the clostridium1. All the solutes were formed from the initial conversion of cellobiose into lactate, acetate and ethanol (\ref{fig:Schema of complex granule formation}) . Complex granule was formed after 1000 hrs of computer simulation (corresponding to the 42 days in the lab-scale reactor) and no firm stratification was observed (\textbf{Figure 2 - table with granules and solutes for comparison}), contrary to the previous simulation of granule-fed granule \cite{Doloman et al., 2017} and similar published laboratory studies. Instead, formed granule on the cellobiose resembled a mixed microbial structure, since there was no sharp diffusion gradient of the formed/consumed solutes. Such structure looks similar to the reported laboratory-studied granules fed with complex brewery, cellulose or protein-rich substrate \cite{batstone2004influence, diaz2006phenotypic, baloch2008structural}. Since all three initial cellobiose-digestives (acetate, ethanol and lactate) were produced simultaneously, all three corresponding bacterial consumers (clostridium 2, desulfovibrio and methanogen1) are present in the outer core of the granule, as well as equally distributed throughout the granule depth. The only two bacterial groups that are located closer to the center of the granule are two methanogen types: both acetate and hydrogen utilized by them are the last terminal solutes in the conversion chain of cellobiose. 
 
-\begin{alg}
-\begin{tabbing}
-{\bf Input:} \=  \\ 
-    \> Training vectors ($V_t$), \\
-    \> Distortion measurement rule $d$, \\
-    \> Codebook size $N$, \\
-    \> Threshold $\varepsilon$ \\
-{\bf Output: } \\
- \> Codebook Vectors, $Cb_i$  \\
-{\bf Begin} \\
- \> Select $N$ initial codevectors, $Cb_i$  \\
- \> {\bf Do} \= \\
- \> \> {\bf Begin} \= \\
- \> \> \> Partition $V_t$ \\
- \> \> \> $Dist_{prev} = Dist_{current}$ \hspace{1.2in}\=/* Dist is the average */ \\
- \> \> \> Calculate $Dist_{current}$ \> /* distortion of all the */ \\
- \> \> \> Calculate Centroids of $N$ groups of $V_t$ \> /* training vectors when */\\
- \> \> \> $Cb_i$ = Centroid of that group \> /* partitioned or encoded */ \\
- \> \> {\bf End} \\
- \> {\bf while} $\{(Dist_{prev} - Dist_{current})/Dist_{prev} \geq \varepsilon\}$ \\
-{\bf End} \\
-\end{tabbing}
-\caption{LBG}
-\label{alg:LBG}
-\end{alg}
+After 980 hrs of simulation, there was no death observed in the granule, contrary to the digestion of the glucose fed granule (death occurred within 350 hrs). The dead biomass on cellobiose starts to appear around hour 985 (41 days), and is represented by the ethanol-consuming Desulfovibrios. Around hour 1160 (48days) Clostridium1, consuming cellobiose and those that are located closer to the core of the granule, also start to die, due to the lack of cellobiose in the core of the granule caused by the diffusion limitation. 
 
-\section{Reasons for the Poor Performance of RVQs}
+\section{Bioaugmentation with lipid-degrading bacteria}
 
-\begin{equation}
-d(X^{\rho},Y_i^{\rho} + A^{\rho+1}+ \cdots + A^{P}) \leq d(X^{\rho},A^{\rho} + A^{{\rho}+1} + \cdots + A^P)
-\label{cond-optpart}
-\end{equation}
+To investigate the possibility of incorporating a new bacterium type into the cellobiose-fed granule, a lipid-degrading bacteria was chosen. Both scenarios with or without substrate pressure were investigated.
 
-It can be noticed from the above equation that while the traditional
-RVQ partitions are based on the stagewise residues, the optimal RVQ
-partitions are based on the final residues. As is evident from
-(\ref{cond-optpart}), the optimal codevectors are unique.  The
-equivalent codevectors are obtained by summing all possible
-combinations of the codevectors of all stages.  These represent the
-set of reconstruction vectors possible at the decoder.
+\subsection{Incorporation of lipid-degrading bacteria with oleate as a sole substrate}
 
-\section{Methods to Improve RVQ Performance}
+This simulation is referred to by the name part 2.1 in the rest of the study.When lipid derivative, oleate, was used as a sole feed for the established granule on cellobiose, OleateDegraders were successfully incorporated into the granule, residing mainly in the outer layer of the granule (Figure 2, video with species count). Even though early OleateDegraders did distribute randomly in the granule (until around 450 hrs), they are steadily pushed to the outer layers of the granule, potentially due to the presence there of higher oleate quantities. A sharp oleate gradient cannot be visually detected on the oleate video, due to the still low numbers of the incorporated OleateDegraders. Nevertheless, those few successfully incorporated OleateDegraders are highly active in the granule, since there is a constant decrease in the total amount of the oleate in the system and an increase in the amount of produced acetate over time (REFERENCE GRAPHS OF TOTAL SOLUTES AND VIDEOS). Note that acetate is produced exactly at the locations of the newly incorporated OleateDegraders.
 
-The various  methods either suboptimal or optimal used in codebook generation
- and in the quantizer (RVQ) implementation are dealt with here.  The common
- goal of all these methods is to improve the performance of the RVQ. 
+A peculiar architecture can be seen with the "pockets" of methanogenic bacteria randomly distributed around the granule. This is caused by the sudden death of other bacteria (clostridium1,2, desulfovibrio) as soon as the residual substrates are depleted from initial growth on cellobiose (Part 1), since in this 2.1 simulation oleate is the only supplied feed for the granular growth. By judging the distribution of the methanogenic "pockets" one can predict where the food (acetate) was supplied to them by clostridium1 and desulfovibrios. The result of the sudden death of the acetate-supplying bacteria is an irregular pattern of methanogens distribution across the whole granule, both in density and number. Similar "pocketing" behavior of other acetoclastic methanogenic bacteria in anaerobic granule were reported by \cite{schmidt1999immobilization}. 
 
-\subsection{Brute Force RVQ or Stagewise RVQ (SRVQ)}
+Current modeling platform doesn't have an algorithm for a "shrinking" and eliminating of the dead particles, as division of granules and their further growth into "daughter" smaller granules is beyond the scope of the current work. However, one can theoretically predict a division of the initial cellobiose-fed granule into the multitude of the new "daughter" granules with only two bacterial species: Methanogen1 and OleateDegraders. The number of big blue Methanogen1 clusters as seen in the granule image(\ref{fig:part2.1}) possibly can be equal to the number of the new small granules to be formed due to the bioaugmentation with OleateDegraders. Nevertheless, this "daughter" division might not take place in the anaerobic reactor, if the applied sheer stress of the up-flow velocity in the UASB reactors is not high enough to physically break the granule with dead particles in it. In this case newly augmented granules will continue to grow with so-called cavities, as described in laboratory studies. 
 
-The new codevectors are obtained by adding the centroids of the
-stagewise residues to the old codevectors.  This can be done using a
-random splitting technique or a selective splitting technique.
+\subsection{Incorporation of lipid-degrading bacteria with both cellulose and oleate as substrates}
 
-\subsection{Exhaustive Search RVQ (ESRVQ)}
+This simulation is referred to by the name part 2.2 in the rest of the study.Contrary to the previous study where oleate was the sole supplied substrate for the granular growth, this experiment investigated a lack of substrate-pressure on the success of the bioaugmentation with OleateDegraders.
 
-ESRVQ is the optimal RVQ described in the previous section.  ESRVQ, as
-the name suggests, exhaustively searches all the {\em equivalent}
-codevectors as shown in (\ref{cond-optpart}).  Centroids of the final
-residues are added to the codevectors during each iteration of the
-codebook design, to obtain the new optimal codevectors for the given
-partition.
+The OleateDegraders are incorporated into the outer layer of the granule (Supplementary material Video of 2.2 part) and are successfully present there till 720 hrs (30 days) of the simulation. After this, OleateDegraders are sloughed from the granule's outer layer and washed out.Thus, availability of the proper substrate niche in the granule does not necessarily leads to the successful incorporation of the new species. If the granule is supplied with the old type of feed that can sustain viability of the complete bacterial population inside, chances of the new species to be incorporated into a mature and rapidly developing consortia are very low.  
 
-\subsection{Deep Search RVQ}
+\section{Bioaugmentation with ethanol-degrading bacteria}
 
-Although ESRVQ is optimal, it needs an exhaustive search encoder. We
-must be able to create the encoder using an optimal method. 
+Another question that was necessary to study is: Can one bioaugment with bacteria that is needed for the middle step of the digestion? On the contrary to introducing both new substrate and a bacteria, in this part we investigate addition of a bacterium that is critical for some steps of the originally present cellobiose bioconversion scheme, ethanol degrader and a hydrogen producer: desulfovibrio (fig:\ref{fig:Schema of complex granule formation}).
+
+\subsection{Incorporation of ethanol-degrading bacteria after initial granulation}
+
+This simulation is referred to by the name part 2.3 in the rest of the study.To explore how incorporation of desulfovibrios into the mature granule changes the solutes profile and granular architecture, we first simulated development of the initial granule without desulfovibrio (REFERENCE VIDEO 3.1.1). One can note a poor microbial diversity in the granule and a 20-fold decrease in the averaged produced methane amount. In the next stage, desulfovibrios were introduced back to the granule and cells were successfully incorporated, rapidly filling the whole depth of the granule and consuming the accumulated ethanol. One can also note that despite the fact that hydrogen was intensely produced by the desulfovibrios, it was not converted into the methane  (\ref{fig:Schema of complex granule formation}). This is because all the methanogens2 were already dead by the time incorporation of desulfovibrios took place. This finding has an important practical application, since it addresses the speed which should be used if bioaugmentation is planned. Bacteria tend to die, if not forming dormant spores, and this can break an important metabolic chain and cause significant fluctuations in pH and even shifts the total product yield (needless to say that in real digester shifts to high amounts of hydrogen would crash the whole system and prohibit aceticlastic methane-producing activity. 
+
+\subsection{Re-supply of ethanol-degrading bacteria to the established consortia}
+
+This simulation is referred to by the name part 2.4 in the rest of the study.Sometimes bioaugmentation fails if there is no substrate niche available for the newly-introduced microbe to occupy. Or, if there is a local bacteria in the granule that is already performing the metabolic function of interest for the bioaugmentation. In this case, competition for the same type of substrate and a place in a constantly growing granule may lead to unsuccessful bioaugmentation. To study this scenario, we introduced additional ethanol-consuming and hydrogen-producing bacteria (desulfovibrio2) into a well-formed and maintained granule (taken from the Part 1 simulation with a complete metabolic pathway).   
+
+The results demonstrate that additional ethanol-consuming bacteria (desulfovibrio2) were rapidly incorporated to the mature granule with its own population of desulfovibrio1. However, newly introduced bacteria quickly die off after 144 hours of simulation: possibly due to both slaughing of the biomass above 630 $\mu$m limit and due to the competition for the ethanol with originally present desulfovibrio1. One can note a very scarce amount of ethanol of the solute graphs at the end of the simulation (MAIN TABLE-FIGURE) and throughout the 1000 hour simulation (part 2.4 VIDEO IN THE SUPPLEMENTAL MATERIAL).
 
 
-\subsection{Comparison of SRVQ, DSRVQ, and ESRVQ Encoders}
-
-This section compares the different encoders presented previously.
-The different encoders have different performance and complexity, and
-so must be compared using a common basis.  This is difficult to do,
-since we must first establish the criteria we will use.
-
-\subsection{Algorithm for Generating Jointly Optimized
-Codebooks}
+\begin{table}
+\centering
+\caption {Parameters used in model and their correspondent values}
+\smallskip
 
 
-The ESRVQ is not instrumentable and the DSRVQ does not use a
-tree-structured encoder.  Hence Barnes et al. proposed the reflection
-symmetric RVQ or the rRVQ~\cite{Barn-JORVQ}.  The rRVQ uses a
-tree-structured encoder similar to SRVQ although it differs from the
-traditional RVQ or the SRVQ encoder in that it is slightly more
-complex.  The rRVQ codebook is also more structured than the
-traditional RVQ.
-
-Some other citations are in
-\cite{moon,BAK-nonadVQ,B-JORVQ,Barnes-RQ,Datasheet1,CID-example,Privatecom,Patent1,Berg-RD,CMH}.
-
-\subsection{Reflection Symmetric RVQ (rRVQ)}
-
-The ESRVQ is not instrumentable and the DSRVQ does not use a
-tree-structured encoder.  Hence Barnes et al. proposed the reflection
-symmetric RVQ or the rRVQ~\cite{Barn-JORVQ}.  The rRVQ uses a
-tree-structured encoder similar to SRVQ although it differs from the
-traditional RVQ or the SRVQ encoder in that it is slightly more
-complex.  The rRVQ codebook is also more structured than the
-traditional RVQ.
-
-The structured nature of the rRVQ codebook allows for a reduction of
-the complexity of the the implementation.
-
-\subsubsection{Binary rRVQ}
-
-It was already stated that for the optimal performance of the RVQ, an
-exhaustive search encoder must be used. To avoid this in rRVQ the
-codebook is constrained in such a way that the nearest neighbor
-stagewise equivalence classes are simply connected and
-convex~\cite{Barn-JORVQ}.  A reflection symmetry is forced between the
-stagewise codevectors of the binary rRVQ to obviate the suboptimality
-caused by {\em entanglement} and {\em overlapping} discussed in the
-previous chapter.  Barnes et al. derived the optimality conditions
-for the rRVQ quantitatively~\cite{Barn-JORVQ}.  They stated their
-results as follows~\cite[pp. 3--4]{Barn-JORVQ}:
-\begin{quotation}
-\begin{spacing}{1}
-  ``The difficulty in achieving optimality is that it is difficult.  We
-  observed that it was necessary to look at the conditions for
-  optimality before we could proceed.  We then proceeded with caution.
-
-  Having proceeded, we applied the conditions for optimality.  To our
-  amazement, we found our results were optimal.''
-\end{spacing}
-\end{quotation}
-
-
-\subsection {Distortion Results and Analysis}
-Table \ref{table:dist4x4} gives the PSNR in dB of the reconstructed test image,
-compressed (encoded and decoded) using the codebooks generated by SRVQ. 
-
-\begin{table}[!t] % table at top of page.
-  % increase table row spacing, adjust to taste
-  \renewcommand{\arraystretch}{1.3}
-  \caption{Performance results of ESRVQ, rRVQ, SRVQ, and DSRVQ of 4x4
-    vectors (PSNR~in~dB).}
-  \label{table:dist4x4}
-
-  \centering
-  \begin{tabular}{||c|c||c|c||c|c||c|c||c|c||} \hline
-    No. of  & &
-    \multicolumn{2}{c||}{SRVQ} & \multicolumn{2}{c||}{DSRVQ} &
-    \multicolumn{2}{c||}{ESRVQ} & \multicolumn{2}{c||}{rRVQ} \\ \cline{3-10}
-    Stages & bps & Unopt & JO & Initial & JO & Initial & JO & Initial & JO \\ \hline
-  \end{tabular}
+	\def\arraystretch{1.1}%
+	\setlength{\tabcolsep}{1em}
+	\begin{tabular}{|p{6cm}|p{1.2cm}|p{1.4cm}|p{1.5cm}|p{3cm}|}
+		\hline
+		\multicolumn{5}{|c|}{	\textbf{Parameter Summary}} \\
+		\hline
+		\textbf{Model parameter   }  &	\textbf{Symbol } 	&	\textbf{ Value }& 	\textbf{Unit}& 	\textbf{References}\\
+		\hline
+		\multicolumn{5}{|c|}{	\textbf{Solutes}} \\
+		\hline
+		Diffusion of Cellobiose in liquid  &$ D_{C}	$    & 5.1x$10^{-6}$ &$m^{2}$ /day& \cite{}  \\ \cline{1-5}	
+		Diffusion of Oleate in liquid	 &$ D_{O} $	& 2.85x$10^{-5}$ &$m^{2}$ /day&\cite{} \\ \cline{1-5}
+		Diffusion of Lactate in liquid	 &$ D_{L} $	& 9.07x$10^{-5}$ &$m^{2}$ /day&\cite{} \\ \cline{1-5}
+        Diffusion of Acetate in liquid	 &$ D_{A} $	& 1.05x$10^{-4}$ &$m^{2}$ /day&\cite{} \\ \cline{1-5}
+        Diffusion of Ethanol in liquid	 &$ D_{E} $	& 7.25x$10^{-5}$ &$m^{2}$ /day&\cite{} \\ \cline{1-5}
+        Diffusion of Hydrogen in liquid	 &$ D_{H} $	& 3.89x$10^{-4}$ &$m^{2}$ /day&\cite{} \\ \cline{1-5}
+		Diffusion of Methane in liquid  & $D_{M}	$	& 1.29x$10^{-4}$ &$m^{2}$ /day& \cite{haynes2012CRC}\\  \cline{1-5}
+		Biofilm Diffusivity  & $ \gamma	$	&	30 & \% & \cite{lens2003diffusional}\\ \cline{1-5}
+		
+		\multicolumn{5}{|c|}{\textbf{Clostridium I:}} \\
+		\cline{1-5}
+		Cell mass   & $ B_{c1}$&	500 & fg& \cite{kubitschek1990cell} \\ \cline{1-5}
+		Division radius  & 	&2&$\mu$m &\cite{sowers1984methanosarcina}\\ \cline{1-5}
+		Maximum growth rate	& $\hat{\mu_{c1}}$ & 0.15& $h^{-1}$&\cite{kubitschek1990cell}, \cite{gavala2003kinetics, ibba1991two} \\ \cline{1-5}
+		Substrate saturation constant& $ Ks_{C} $ &	2.5&g/L&\cite{kalyuzhnyi1997batch, ibba1991two}  \\ \cline{1-5}
+		Biomass conversion rate& $ \alpha_{bc}$	&0.203& $\frac{g_{biomass}}{g_{cellobiose}}$&\cite{ibba1991two, bhunia2008analysis}  \\ \cline{1-5}
+		Substrate conversion rate&$ \alpha_{ac}$&	0.45& $\frac{g_{acetate}}{g_{cellobiose}}$&\cite{gavala2003kinetics, ibba1991two}  \\ \cline{1-5}
+        Substrate conversion rate&$ \alpha_{lc}$&	0.0096& $\frac{g_{lactate}}{g_{cellobiose}}$&\cite{gavala2003kinetics, ibba1991two}  \\ \cline{1-5}
+        Substrate conversion rate&$ \alpha_{ec}$&	0.28& $\frac{g_{ethanol}}{g_{cellobiose}}$&\cite{gavala2003kinetics, ibba1991two}  \\ \cline{1-5}
+		Death delay&	&48 & $h$& estimated\\ \cline{1-5}
+		Death threshold&	&0.02 & g/L& estimated\\ \cline{1-5}
+        
+        \multicolumn{5}{|c|}{\textbf{OleateDegrader ????Check mass, radius and Dying switches:}} \\
+		\cline{1-5}
+		Cell mass   & $ B_{o}$&	500 & fg& \cite{kubitschek1990cell} \\ \cline{1-5}
+        Division radius  & 	&2&$\mu$m &\cite{}\\ \cline{1-5}
+		Maximum growth rate	& $\hat{\mu_{o}}$ & 0.02& $h^{-1}$&\cite{} \\ \cline{1-5}
+		Substrate saturation constant& $ Ks_{O} $ &	0.02&g/L&\cite{}  \\ \cline{1-5}
+        Product inhibition constant& $ Ki_{Ap} $ &	5&g/L&\cite{}  \\ \cline{1-5}
+        Biomass conversion rate& $ \alpha_{bo}$	&0.1& $\frac{g_{biomass}}{g_{oleate}}$&\cite{}  \\ \cline{1-5}
+		Substrate conversion rate&$ \alpha_{ao}$&	1.85& $\frac{g_{acetate}}{g_{ethanol}}$&\cite{}  \\ \cline{1-5}
+        Death delay&	&96 & $h$& estimated\\ \cline{1-5}
+		Death threshold&	&0.00001 & g/L& estimated\\ \cline{1-5}
+        
+        \multicolumn{5}{|c|}{\textbf{Clostridium II:}} \\
+		\cline{1-5}
+		Cell mass   & $ B_{c2}$&	500 & fg& \cite{kubitschek1990cell} \\ \cline{1-5}
+		Division radius  & 	&2&$\mu$m &\cite{}\\ \cline{1-5}
+		Maximum growth rate	& $\hat{\mu_{c2}}$ & 0.144& $h^{-1}$&\cite{}, \cite{} \\ \cline{1-5}
+		Substrate saturation constant& $ Ks_{L} $ &	0.03&g/L&\cite{}  \\ \cline{1-5}
+		Biomass conversion rate& $ \alpha_{bc2}$	&0.06& $\frac{g_{biomass}}{g_{lactate}}$&\cite{}  \\ \cline{1-5}
+		Substrate conversion rate&$ \alpha_{al}$&	0.45& $\frac{g_{acetate}}{g_{lactate}}$&\cite{}  \\ \cline{1-5}
+        Death delay&	&118 & $h$& estimated\\ \cline{1-5}
+		Death threshold&	&0.00001 & g/L& estimated\\ \cline{1-5}
+        	\end{tabular}
+	\label{parametersTable}
 \end{table}
 
-The ESRVQ is not instrumentable and the DSRVQ does not use a
-tree-structured encoder.  Hence Barnes et al. proposed the reflection
-symmetric RVQ or the rRVQ~\cite{Barn-JORVQ}.  The rRVQ uses a
-tree-structured encoder similar to SRVQ although it differs from the
-traditional RVQ or the SRVQ encoder in that it is slightly more
-complex.  The rRVQ codebook is also more structured than the
-traditional RVQ.
 
-It is important to recognize at this point, that rRVQ is a suboptimal
-method for covering the vector space.  It is therefore important to
-make sure that the best possible vectors are chosen for the codebook.
+\begin{table}
+\caption{ Parameters used in model and their correspondent values}
+\smallskip
+	
+	
+	\def\arraystretch{1.0}%
+	\setlength{\tabcolsep}{1em}
+	\begin{tabular}{|p{5cm}|p{1.2 cm}|p{1.2cm}|p{1.2cm}|p{3cm}|}
+		\hline
+		\multicolumn{5}{|c|}{	\textbf{Parameter Summary}} \\
+		\hline
+		\textbf{Model parameter   } & \textbf{Symbol } 	&	\textbf{ Value }& 	\textbf{Unit}& 	\textbf{References}\\
+		\hline
 
-% For use with multiple-paper format, uncomment the fillowing:
-% \pagebreak
-% \bibliographystyle{IEEEtran}
-% \bibliography{IEEEabrv,BibFile2}  % uses the references stored in BibFile2.bib for this chapter
+        \multicolumn{5}{|c|}{\textbf{Desulfovibrio:}} \\
+		\cline{1-5}
+		Cell mass   & $ B_{d}$&	500 & fg& \cite{kubitschek1990cell} \\ \cline{1-5}
+        Mass of EPS capsule   & &	10&fg&\cite{}\\ \cline{1-5}
+		Division radius  & 	&2&$\mu$m &\cite{}\\ \cline{1-5}
+		Maximum growth rate	& $\hat{\mu_{d}}$ & 0.125& $h^{-1}$&\cite{} \\ \cline{1-5}
+		Substrate saturation constant& $ Ks_{E} $ &	4.5x$10^{-4}$&g/L&\cite{}  \\ \cline{1-5}
+        Product inhibition constant& $ Ks_{A} $ &	7.2&g/L&\cite{}  \\ \cline{1-5}
+        Substrate inhibition constant& $ Ki_{E} $ &	80.5&g/L&\cite{}  \\ \cline{1-5}
+		Biomass conversion rate& $ \alpha_{be}$	&0.22& $\frac{g_{biomass}}{g_{ethanol}}$&\cite{}  \\ \cline{1-5}
+		Substrate conversion rate&$ \alpha_{ac}$&	1.3& $\frac{g_{acetate}}{g_{ethanol}}$&\cite{}  \\ \cline{1-5}
+        Substrate conversion rate&$ \alpha_{hc}$&	0.17& $\frac{g_{hydrogen}}{g_{ethanol}}$&\cite{}  \\ \cline{1-5}
+        Death delay&	&96 & $h$& estimated\\ \cline{1-5}
+		Death threshold&	&0.00001 & g/L& estimated\\ \cline{1-5}
+		
+		\multicolumn{5}{|c|}{\textbf{Methanogens I:}} \\
+		\cline{1-5}
+		Cell mass 	 & $ B_{m1} $&1000 &fg&\cite{sowers1984methanosarcina}\\ \cline{1-5}
+		Mass of EPS capsule   & &	10&fg&\cite{moletta1986dynamic}\\ \cline{1-5}
+		Division radius  & 	&2&$\mu$m &\cite{sowers1984methanosarcina}\\ \cline{1-5}
+		Maximum growth rate& $\hat{\mu_{m1}}$&	0.029&  $h^{-1}$&\cite{moletta1986dynamic, nishio1990methanogenesis}\\ \cline{1-5}
+		Substrate saturation constant& $ Ks_{Ac} $&	1.02& g/L&\cite{moletta1986dynamic}\\ \cline{1-5}
+        Substrate inhibition constant& $ Ki_{Ac} $ &	48.64&g/L&\cite{gavala2003kinetics, ibba1991two}  \\ \cline{1-5}
+		Biomass conversion rate&$ \alpha_{ba}$&	0.15&$ \frac{g_{biomass}}{g_{acetate}}$ &\cite{nishio1990methanogenesis, kalyuzhnyi1997batch}\\ \cline{1-5}
+		Substrate conversion rate&$ \alpha_{ma}$	&0.26 & $\frac{g_{methane}}{g_{acetate}}$&\cite{nishio1990methanogenesis}\\ \cline{1-5}
+		Death delay&	&48 & $h$&estimated\\ \cline{1-5}
+		Death threshold&	&0.00001 & g/L&estimated\\ \cline{1-5}
+        
+		\multicolumn{5}{|c|}{\textbf{Methanogens II:}} \\
+		\cline{1-5}
+		Cell mass 	 & $ B_{m2} $&1000 &fg&\cite{sowers1984methanosarcina}\\ \cline{1-5}
+		Mass of EPS capsule   & &	10&fg&\cite{moletta1986dynamic}\\ \cline{1-5}
+		Division radius  & 	&3&$\mu$m &\cite{sowers1984methanosarcina}\\ \cline{1-5}
+		Maximum growth rate& $\hat{\mu_{m2}}$&	0.02&  $h^{-1}$&\cite{moletta1986dynamic, nishio1990methanogenesis}\\ \cline{1-5}
+		Substrate saturation constant& $ Ks_{H} $& 18x$10^{-6}$& g/L&\cite{moletta1986dynamic}\\ \cline{1-5}
+        Biomass conversion rate&$ \alpha_{bh}$&	0.033&$ \frac{g_{biomass}}{g_{hydrogen}}$ &\cite{nishio1990methanogenesis, kalyuzhnyi1997batch}\\ \cline{1-5}
+		Substrate conversion rate&$ \alpha_{mh}$	&0.26 & $\frac{g_{methane}}{g_{hydrogen}}$&\cite{nishio1990methanogenesis}\\ \cline{1-5}
+		Death delay&	&48 & $h$&estimated\\ \cline{1-5}
+		Death threshold&	&0.000001 & g/L&estimated\\ \cline{1-5}
+		
+	
+	\end{tabular}
+	\label{parametersTable}
+\end{table}
 
-% Local Variables:
-% TeX-master: "newhead"
-% End:
+Seven solutes: cellobiose ($S_{C}$), oleate ($S_{O}$), lactate ($S_{L}$), acetate ($S_{A}$), ethanol ($S_{E}$), hydrogen ($S_{H}$), and methane ($S_{M}$) exist within the reactor model. The distribution of these solutes is controlled by Equations~\ref{s1}, \ref{s2}, \ref{s3}, \ref{s4}, \ref{s5}, \ref{s6}, and \ref{s7}, respectively. The diffusion coefficients and reaction rates take different forms for each region depending upon the spatial distribution of six types of biomass: clostridium1 (generic bacterium degrading cellobiose) ($B_c1$), clostridium2 (generic bacterium degrading lactate) ($B_c2$), oleateDegraders ($B_o$), desulfovibrio (generic bacterium degrading ethanol) ($B_d$), and two types of methanogens ($B_m1$), ($B_m2$), degrading acetate and hydrgen respectively. These relationships are described in the Equation~\ref{s8}. 
+The effective diffusion coefficient is decreased within the granule compared with the liquid value in order to account for the increased mass transfer resistance. The diffusivity values used for the model (specified in  Table 1) are taken from literature related to biofilm diffusivity studies \cite{stewart2003diffusion,lens2003diffusional}.
+
+
+\begin{equation}
+\frac{\partial S_{C}}{\partial t} = B(x,y).D_{C}.\frac{\bigtriangledown^{2} S_{C}}{{\partial x}{\partial y}}- \mu_{c1}(S_{C},S_{A}).\frac{B_{c1}}{\alpha_{bc1}}
+\label{s1}
+\end{equation}
+
+\begin{equation}
+\frac{\partial S_{O}}{\partial t} = B(x,y).D_{O}.\frac{\bigtriangledown^{2} S_{O}}{{\partial x}{\partial y}}- \mu_{o}(S_{O},S_{A}).\frac{B_{o}}{\alpha_{bo}}
+\label{s2}
+\end{equation}
+
+\begin{equation}
+\frac{\partial S_{L}}{\partial t} = B(x,y).D_{L}.\frac{\bigtriangledown^{2} S_{L}}{{\partial x}{\partial y}}+ \mu_{c1}(S_{C}).\frac{B_{c1}}{\alpha_{bc1}}
+\label{s3}
+\end{equation}
+
+\begin{equation}
+\frac{\partial S_{A}}{\partial t} = B(x,y).D_{A}.\frac{\bigtriangledown^{2} S_{A}}{{\partial x}{\partial y}}+ \mu_{d}(S_{E},S_{A}).\frac{B_{d}}{\alpha_{bd}}+ \mu_{c2}(S_{L}).\frac{B_{c2}}{\alpha_{bc2}}
+\label{s4}
+\end{equation}
+
+\begin{equation}
+\frac{\partial S_{E}}{\partial t} = B(x,y).D_{E}.\frac{\bigtriangledown^{2} S_{E}}{{\partial x}{\partial y}}+ \mu_{c1}(S_{C}).\frac{B_{c1}}{\alpha_{bc1}}
+\label{s5}
+\end{equation}
+
+\begin{equation}
+\frac{\partial S_{H}}{\partial t} = B(x,y).D_{H}.\frac{\bigtriangledown^{2} S_{H}}{{\partial x}{\partial y}}+ \mu_{d}(S_{E},S_{A}).\frac{B_{d}}{\alpha_{bd}}
+\label{s6}
+\end{equation}
+
+\begin{equation}
+\frac{\partial S_{M}}{\partial t} = B(x,y).D_{M}.\frac{\bigtriangledown^{2} S_{M}}{{\partial x}{\partial y}}+ \mu_{m1}(S_{A}).\frac{B_{m1}}{\alpha_{bm1}}+ \mu_{m2}(S_{H}).\frac{B_{m2}}{\alpha_{bm2}}
+\label{s7}
+\end{equation}
+
+where,
+
+\begin{equation}
+B(x,y)=\left\{
+\begin{array}{ll}
+\begin{tabular}{cc}
+
+1.0    & if location $x,y$ contains no biomass\\
+
+$\gamma$ & if location $x,y$ contains biomass
+\end{tabular}
+
+\end{array}
+\right.
+\label{s8}
+\end{equation}
+
+Equations \ref{b1}, \ref{b2}, \ref{b3}, \ref{b4}, \ref{b5} and \ref{b6}  describe changes in the biomass of all growing 6 bacterial cell types (clostridium1, clostridium2, oleateDegraders, desulfovibrio and two types of methanogens) as a function of local cellobiose, acetate, lactate, ethanol, methane and hydrogen concentrations. A discrete switching mechanism is used to model cell death due to a lack of food. The switching mechanism is defined as the function $die(B_i)$ in the equations. For example, Clostridium1 cells are converted to dead cells when the amount of cellobiose is below a threshold value (death threshold in Table 1) for a period of 48 hours. Similarly,  the Methanogen1 cells are converted to dead cells when the amount of acetate is below a threshold value (death threshold in Table 1) for a period of 48 hours. The rate of increase in dead cell mass is define in Equation~\ref{b7}. The parameter values for controlling cell death are estimated due to the lack of studies quantifying the response of described cell types to nutritional stress.
+
+\begin{equation}
+\frac{\partial B_{c1}}{\partial t} = \mu_{c1}(S_{C}) B_{c1}-die(B_{c1})
+\label{b1}
+\end{equation}
+
+
+\begin{equation}
+\frac{\partial B_{c2}}{\partial t} = \mu_{c2}.(S_{L}). B_{c2}-die(B_{c2})
+\label{b2}
+\end{equation}
+
+\begin{equation}
+\frac{\partial B_{o}}{\partial t} = \mu_{o}.(S_{O}, S_{A}). B_{o}-die(B_{o})
+\label{b3}
+\end{equation}
+
+\begin{equation}
+\frac{\partial B_{d}}{\partial t} = \mu_{d}.(S_{E}, S_{A}). B_{d}-die(B_{d})
+\label{b4}
+\end{equation}
+
+\begin{equation}
+\frac{\partial B_{m1}}{\partial t} = \mu_{m1}.(S_{A}). B_{m1}-die(B_{m1})
+\label{b5}
+\end{equation}
+
+\begin{equation}
+\frac{\partial B_{m2}}{\partial t} = \mu_{m2}.(S_{H}). B_{m2}-die(B_{m2})
+\label{b6}
+\end{equation}
+
+\begin{equation}
+\frac{\partial B_{dead}}{\partial t} = die(B_{c1}) + die(B_{c2}) + die(B_o) + die(B_d) + die(B_{m1}) + die(B_{m2})
+\label{b7}
+\end{equation}
+
+The growth rates: of clostridium1 is $\mu_{c1}(S_{C})$, defined in Equation~\ref{cellobiosedegradation}, the growth rate of clostrodium2 is $\mu_{c2}(S_{L})$, defined in Equation~\ref{lactatedegradation}, the growth rate of oleateDegraders is $\mu_{o}(S_{O}, S_{A})$, defined in Equation~\ref{oleatedegradation}, the growth rate of desulfovibrio is $\mu_{d}(S_{E}, S_{A})$, defined in Equation~\ref{ethanoldegradation}, the 
+methanogens1 is $\mu_{m1}(S_{A})$ defined in Equation~\ref{acetatedegradation} and the growth rate of methanogen2 is $\mu_{m2}(S_{H})$, defined in Equation~\ref{hydrogendegradation}.
+From the equations can be seen that growth of Clostridium1, Clostridium2 and Methanogen2 follows Monod growth kinetic, while growth of OleateDegraders has also product inhibition involved and both equations ~\ref{ethanoldegradation} and ~\ref{acetatedegradation} for Desulfovibrios and Methanogen1 demonstrate Haldane growth kinetic, substrate and product inhibition. The Java code in \textsl{cDynoMiCs} was manipulated to add functionality of describing bacterial growth via Haldane kinetic. 
+
+\begin{equation}
+\mu_{c1}(S_{C})={\hat{\mu}_{c1}}\frac{{S_{C}}}{{K_{sC}+S_{C}}}
+\label{cellobiosedegradation}
+\end{equation}
+
+\begin{equation}
+\mu_{c2}(S_{L})={\hat{\mu}_{c2}}\frac{{S_{L}}}{{K_{sL}+S_{L}}}
+\label{lactatedegradation}
+\end{equation}
+
+\begin{equation}
+\mu_{o}(S_{O}, S_{A})=\hat{\mu}_{o}.\frac{{S_{O}}}{{(K_{sO}+S_{o})}}.\frac{K_{i_Ap}}
+{{(K_{i_Ap}+S_{A}})}
+\label{oleatedegradation}
+\end{equation}
+
+\begin{equation}
+\mu_{d}(S_{E}, S_{A})=\hat{\mu}_{d}.\frac{{S_{E}}}{{(K_{sE}+S_{E}+\frac{S_{E}^{2}}{K_{ie}})}}.\frac{K_{i_A}}
+{{(K_{i_A}+S_{A}})}
+\label{ethanoldegradation}
+\end{equation}
+
+\begin{equation}
+\mu_{m1}(S_{A})=\hat{\mu}_{m1}.\frac{{S_{A}}}{{(K_{sAc}+S_{A}+\frac{S_{A}^{2}}{K_{iAc}})}}
+\label{acetatedegradation}
+\end{equation}
+
+\begin{equation}
+\mu_{m2}(S_{H})={\hat{\mu}_{m2}}\frac{{S_{H}}}{{K_{sH}+S_{H}}}
+\label{hydrogendegradation}
+\end{equation}
+
+The source code of \textsl{cDynoMiCs} was also modified to introduce a new \textbf{\textit{sloughing}} function, which destroys all the granular biomass that grows above the set granule diameter. Sloughing is needed to simulate a UASB-like environment in the model. Granules in a UASB reactor are constantly under the sheer stress from the continuously flowing feed in the upflow mode. Thus, published works report a certain diameter threshold, above which granule do not grow in the UASB-type reactor. Current study uses a diameter of 630 $\mu$m (this number was mostly picked to decrease computational powers required to compute a bigger granule). The value of the maximum granular diameter is specified in the XML instructions. The \textbf{\textit{sloughing}} function runs for every grid position in the simulation and determines whether a grid location should be slaughtered or not, based on the XML-specified maximum diameter. 
+
+Instructions in the XML also include locations of the new species to be introduced to the already formed granule. When needed, new particles were supplied in the four corners of the square 
+
+Current study reports incorporation of additional bacterial species into the already formed granule. Instructions for additional supply of the species that will be incorporated are provied in the xml file, which can be found for each simulation part in the Github source code page. Briefly, new species are introduced to the simulation environment by specifying their correspondent x,y and z coordinates. In all the simualtions with incorporation of new species, those species were initially provided in the four corners of the 508 $\mu$m $\times$ 508  $\mu$m  (2D) domain. 
+
+
+
+\chapter{METHOD}
+
+An agent-based simulator framework, cDynoMiCs [30] is used in this experiment. cDynoMiCs is an extension of iDynomics framework developed by the Kreft group at University of Birmingham specifically for modeling biofilms. cDynoMiCs includes eucaryotic cell modeling processes with the addition of extracellular matrix and cellular mechanisms such as tight junctions and chemotaxis. Each cell is represented as a spherical particle, which has a particular biomass, and implements type and species-specific mechanisms to reproduce cellular physiology. Biochemically, particles can secrete or uptake chemicals that are diffused through the domain by executing reactions. Biomechanically, particles exhibit homogeneous and heterogeneous adhesion, and the formation of tight junctions. Particles model growth by increasing their biomass according to metabolic reactions and split into two particles once a maximum radius threshold is reached. They can also switch from one type of particle to another based on specific microenvironmental conditions and internal states. The simulation process interleaves biomechanical stress relaxation where the particles are moved in response to individual forces, along with the resolution of biochemical processes such as secretion, uptake, and diffusion by a differential equation solver. We assume that the solute fields are in a pseudo steady-state with respect to biomass growth.
+
+Particle growth and division can cause particles to overlap, creating biomechanical stress. To resolve this problem a process called shoving is implemented. When the distance between two particles is less than a fixed threshold set by the particle size, a repulsive force is generated to push them apart, proportional to the overlap distance between the two particles. Then the relaxation process commences that iteratively moves each particle in response to its net force, then recalculates the forces due to the movement. The process terminates when only negligible forces remain, and the system has reached a pseudo steady state.
+
+The typical flow of control and data in the framework is shown in Fig: where amid a solitary worldwide timestep, dynamics of the solute concentration fields, the bulk compartment and the agents are applied independently, in spite of the fact that the progression of each rely upon the present condition of the others (Fig:\ref{fig:algo}). Addressing each class of dynamics separately is possible because they all operate on different timescales (Picioreanu et al., 1999). In addition, the dynamics of the agents are further broken down into smaller timesteps to account for the varied processes affecting agent growth, division and movement, as well as any additional processes an agent may carry out. Once these steps are completed, erosion effects are applied to the biofilm structure as a whole, the global time is incremented, and the next timestep taken.
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.7\textwidth]{images/algo.jpg}
+\caption{ Pseudo-code describing one global timestep iteration of the individual-based simulator.}
+\label{fig:algo}
+\end{figure}
+cDynoMiCs adds new functionality to the Java code of iDynomics and extends the XML protocol, used to specify many different types of simulations. iDynomics writes plain-text XML files as output, and these may be processed using any number of software tools, such as Matlab,R and python. In addition to XML files, iDynoMiCS also writes files for POV-Ray that is used to render 3-D ray-traced images(Fig:\ref{fig:granule}) of the simulation.
+
+In addition to the cDynoMiCs project, we made following enhancements in the framework to achieve the stated results:
+
+\section{Fixing the Haldane kinetic class to incorporate Haldane reactions}
+
+The Haldane kinetic reaction is responsible for the growth of Desulfovibrio and Methanogen I. Sulfate-reducing bacteria (represented here by Desulfovibrio) are inhibited by both substrate and product – ethanol and acetate. But not hydrogen. The growth reaction is the following (combined both Haldane kinetics and SimpleInhibition), where µmax=maximum growth rate for Desulfovibrio, KSEtOH =saturation constant of ethanol, SEtOH=concentration of ethanol,   = inhibition constant for ethanol, KIAc = inhibition constant for acetate on Desulfovibrio, SAc=concentration of acetate:
+
+The HaldaneKinetic class was lacking some critical functionality which needed to be implemented in order to run the haldane reactions.We added following functions in haldanekinetic class to fix this:
+
+\subsection{Default Constructor to initialize the parameters with kinetic coefficients}
+
+Haldane Kinetic reaction is specified in the XML as shown in Fig:\ref{fig:haldanexml.png} below:
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=1.0\textwidth]{images/haldanexml.png}
+\caption{part of input xml where haldane reaction is defined}
+\label{fig:haldanexml}
+\end{figure}
+
+Where Ks and Ki are kinetic coefficients for the reaction, to assign these values defined in the XML to the parameters in haldane Kinetic class, the instance variables Ks and Ki are assigned to the respective values using the newly defined constructor.
+
+\subsection{Creating KineticDiff() method to update the growth rate of cells}
+
+We created a new method to implement the math behind the reaction. The method takes 3 parameters, current solute value, coefficient values the parameter table and the index of the grid. It updates the growth rate based on these parameters and equation() and returns the updated value.
+
+\section{Implementing a new sloughing algorithm}
+
+To consider the agitation caused inside the bioreactor due to the up-flow velocity and other factors, we need to create and implement an algorithm which slaugh every cell which is beyond a predefined maximum radius value from the center of the granule. We created an algorithm which reads two values from the XML:
+
+\begin{itemize}
+\item The maximum radius of the granule defined under “Agent grid” section in the XML by the parameter name ‘\textbf{MaximumGranuleRadius}’.
+\item The value of ‘\textbf{sloughDetachedBiomass}’ parameter defined under “Agent grid” section in the XML which is used to turn the sloughing algorithm on or off.
+\end{itemize}
+These parameters help us to add new functionality in the project without altering the current methods or code.
+
+The algorithm described by Fig:\ref{fig:sloughingalgo} runs for every grid position and determines whether a grid location should be eligible for  sloughing or not.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=1.0\textwidth]{images/sloughingalgo.jpg}
+\caption{Algorithm for sloughing.}
+\label{fig:sloughingalgo}
+\end{figure}
+\section{Transferring species from one simulation to another}
+
+To perform biogmentation, we needed to place the granule into a different bulk which contains some other solutes and while we transfer the granule to the new bulk environment,  all the species cells should stay together in the same position as they were in the last stage of initial simulation. To achieve this, we implemented a new functionality that enables us to copy the contents of last generated agent State file from a simulation and initialize the species distribution of new simulation using the contents of that file so that we would have all the species cells in the same count and locations in the new simulation.We can enable or disable this feature from the xml itself by setting the the value of parameter 'useAgentFile' to true or false so that the existing functionalities won't be altered.
+
+While initializing the agent grid with the species cells in the very first stage of a simulation, we check for the value of the 'useAgentFile' parameter in input xml and if it is set to true, we call a function that initializes the grid positions using the values of the last generated Agent state file of the parent simulation.  
+
+\section{Transferring solutes from one simulation to another}
+
+In some cases of biogmentation, it is also required to copy the solutes present in one simulation to another along with the whole granule in order to closely match the previous bulk environment along with addition of other solutes in the new simulation.To achieve this, we implemented a new functionality that enables us to copy the contents of last generated env State file from a simulation and initialize the solute distribution new simulation using the contents of that file so that we would have all the solutes in the same amount and locations in the new simulation.We can enable or disable this feature from the xml itself by setting the value of parameter 'useSoluteFile' to true or false so that the existing functionalities won't be altered.
+
+While initializing the agent grid with the solute concentrations in the very first stage of a simulation, we check for the value of the 'useSoluteFile' parameter in input xml and if it is set to true, we call a function that initializes the solutes in the grid using the values of the last generated Env state file of the parent simulation.  
+
+\section{Miscellaneous scripts for result analysis}
+
+While the simulation produces a large amount of data files in XML format, we need to get meaningful insights from this data and to achieve this, we generated various graphs and images which accurately describes the granule formation and biogmentation process. 
+
+\subsection{Heatmap for visualizing solute concentrations(MATLAB)}
+
+To better understand the distribution of the solutes in the grid, we used solute concentration files of each solute that are generated after every iteration as inputs to the matlab scripts which generates detailed heatmap images for each solute.This matlab script runs iteratively for each solute type and saves the heatmap images (Fig:\ref{fig:heatmap})in a local folder.
+
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.6\textwidth]{images/Ethanol_solute_640.png}
+\caption{A heatmap representing distribution of solute }
+\label{fig:heatmap}
+\end{figure}
+
+
+\subsection{Spatial distribution analysis(Java)}
+
+The spatial distribution analysis of a complex mature granule involves the analysis of number of cells of each  species typer across the radius of the granule. We created six partitions of the whole granule such that the whole granule can be visualized as it is formed by combining six rings whose difference in outer and inner radius is 90 micrometers.Once we have the spatial data, we used excel to visualize the spatial distribution of cells across the diameter (Fig:\ref{fig:spacial1}) and the density of each cell type in each section(Fig:\ref{fig:spacial2}).
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=1.0\textwidth]{images/spacial1.PNG}
+\caption{Spacial distribution of cells across the granule.}
+\label{fig:spacial1}
+\end{figure}
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=1.0\textwidth]{images/spacial2.PNG}
+\caption{Density of cells across the granule.}
+\label{fig:spacial2}
+\end{figure}
+
+
+
+\subsection{Quantitative analysis of species biomass of the granule (Java)}
+
+To determine the variation in biomass of the granule along with the species, we created a Java script which iterates over the files in Agent sum folder to record the amount of biomass present in each iteration for every species type. We wrote this data in a separate csv file and generated biomass vs time graphs using excel as shown in fig:\ref{fig:speciesgraph}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=1.0\textwidth]{images/speciesgraph.PNG}
+\caption{Species biomass variation over time. }
+\label{fig:speciesgraph}
+\end{figure}
+
+\subsection{Determining maximum solute concentration of each solute in every iteration among all the grid locations(Java)}
+
+To compare the amount of solutes present at the end in various simulations(table:\ref{fig:maxsolutes}), we designed a Java script which iterates through every file in solute concentration directory to calculate and store the maximum value of each solute in a separate list.Once we have a list of all maximum concentrations for a particular species, we iterate over it to find the maximum value among them and use this value as the upper limit in MATLAB heatmap images to get uniform scaling in images. 
+
+\begin{table}[]
+\centering
+\caption{Table containing maximum values of each solute for every simulation}
+\label{maxsolutes}
+\begin{tabular}{|l|l|l|l|l|l|l|}
+\hline
+\textbf{Solute}     & \textbf{Part 1} & \textbf{Part 2.1} & \textbf{Part 2.2} & \textbf{Part3.1.1} & \textbf{Part 2.3} & \textbf{Part 2.4} \\ \hline
+\textbf{Cellobiose} & 2.5             & 0                 & 1                 & 2.5                & 2.5               & 2.5               \\ \hline
+\textbf{Acetate}    & 0.827316476     & 0.620958594       & 0.186192785       & 0.026855469        & 0.017537938       & 0.159550879       \\ \hline
+\textbf{Methane}    & 0.1883077       & 0.143837291       & 0.117415217       & 0.005836998        & 0.014162907       & 0.128956976       \\ \hline
+\textbf{Lactate}    & 0.0122888       & 0.011243562       & 0.005570223       & 8.55E-04           & 9.44E-04          & 0.005545308       \\ \hline
+\textbf{Ethanol}    & 0.001658617     & 0.000130947       & 0.000340241       & 3.25E-02           & 0.02994316        & 7.23E-04          \\ \hline
+\textbf{Hydrogen}   & 0.018430389     & 0.018006731       & 0.00906213        & 0                  & 0.00106765        & 0.00926874        \\ \hline
+\textbf{Oleate}     & 0               & 2.5               & 2.099757379       & 0                  & 0                 & 0                 \\ \hline
+\end{tabular}
+\end{table}
+
+
+\subsection{Snapshots for spatial distribution of all the iterations to generate videos(Python)}
+
+The spatial distribution scripts written in Java produced one file per iteration which consists of spatial distribution data of all species types.These files were used as inputs in a separate python script to generate spacial distribution line graphs for each iteration as shown in fig:\ref{fig:spatial3} . All the images for a single simulation were combined together to form a video demonstrating how the number of cells of each species type varies over the time across the granule.
+
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=1.0\textwidth]{images/spatial3.png}
+\caption{Line graph for spatial distribution of species cells.}
+\label{fig:spatial3}
+\end{figure}
+
+\chapter{DISCUSSION AND CONCLUSIONS}
+
+The granule, which was initially grown and formed on the
+cellulose as the main substrate, loses its mass and undergoes complete structure
+changes, once placed into the new environment with oleate as the main substrate.
+Biomass is initially drastically decreased, when the substrate is swapped. Once the
+substrate is changed from cellulose to oleate, a different, two-species morphology of
+the granule is established. New two-species granule begins to increase the total
+biomass and diameter, but there are inclusions of the dead zones. The dead zones
+are the microbes that were biochemically active previously, on cellulose, but were
+forced to die, when the substrate was switched to the oleate.
+
